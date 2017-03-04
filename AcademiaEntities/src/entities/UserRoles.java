@@ -5,7 +5,9 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
 
 /**
  * Entity implementation class for Entity: UserRoles
@@ -19,6 +21,9 @@ public class UserRoles implements Serializable {
 	private Integer roleId; 
 	@Column(nullable = false)
 	private String role;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "userName", table = "userName", nullable = false)
+	private String userName;
 	private static final long serialVersionUID = 1L;	
 	public UserRoles() {
 		super();

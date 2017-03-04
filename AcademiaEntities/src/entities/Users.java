@@ -23,6 +23,9 @@ public class Users implements Serializable {
 	@Column(nullable = false)
 	@OneToMany(targetEntity = entities.UserRoles.class, mappedBy = "roleId")
 	private Integer roleId;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "inqueryId", table = "inqueries", nullable = false)
+	private Integer inqueryId;
 	private static final long serialVersionUID = 1L;	
 	public Users() {
 		super();

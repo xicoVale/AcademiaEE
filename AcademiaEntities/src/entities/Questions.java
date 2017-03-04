@@ -21,6 +21,9 @@ public class Questions implements Serializable {
 	private Integer inqueryId; 
 	@Basic(optional = false)
 	private String questionText;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "answers", table = "answerId", nullable = false)
+	private Integer answerId;
 	private static final long serialVersionUID = 1L;	
 	public Questions() {
 		super();

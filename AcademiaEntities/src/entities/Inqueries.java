@@ -10,9 +10,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.JoinColumn;
 
 /**
  * Entity implementation class for Entity: Inqueries
@@ -36,6 +38,9 @@ public class Inqueries implements Serializable {
 	@Basic
 	@Temporal(DATE)
 	private LocalDateTime endDate;
+	@ManyToOne
+	@JoinColumn(referencedColumnName = "questionId", columnDefinition = "questions", nullable = false)
+	private Integer questionId;
 	private static final long serialVersionUID = 1L;	
 	public Inqueries() {
 		super();
