@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<entity-mappings version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd">
-	<entity class="entities.UserRoles" access="FIELD">
+<?xml version="1.0" encoding="UTF-8"?><entity-mappings xmlns="http://www.eclipse.org/eclipselink/xsds/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://www.eclipse.org/eclipselink/xsds/persistence/orm http://www.eclipse.org/eclipselink/xsds/eclipselink_orm_2_5.xsd">
+	<entity access="FIELD" class="entities.UserRoles">
 		<table name="userRoles">
 		</table>
 		<attributes>
@@ -8,15 +7,15 @@
 			</id>
 		</attributes>
 	</entity>
-	<entity class="entities.Users" access="FIELD">
+	<entity access="FIELD" class="entities.Users">
 		<table name="users">
 		</table>
 		<attributes>
-			<id name="userName">
+			<id name="userName" attribute-type="java.lang.String">
 			</id>
 		</attributes>
 	</entity>
-	<entity class="entities.Inqueries" access="FIELD">
+	<entity access="FIELD" class="entities.Inqueries">
 		<table name="inqueries">
 		</table>
 		<attributes>
@@ -24,13 +23,13 @@
 			</id>
 		</attributes>
 	</entity>
-	<entity class="entities.Questions" access="FIELD">
+	<entity access="FIELD" class="entities.Questions">
 		<attributes>
 			<id name="questionId">
 			</id>
 		</attributes>
 	</entity>
-	<entity class="entities.Answers" access="FIELD">
+	<entity access="FIELD" class="entities.Answers">
 		<table name="answers">
 		</table>
 		<attributes>
@@ -38,7 +37,7 @@
 			</id>
 		</attributes>
 	</entity>
-	<entity class="entities.UserAnswers" access="FIELD">
+	<entity access="FIELD" class="entities.UserAnswers">
 		<id-class class="entities.UserAnswersPK"/>
 		<attributes>
 			<id name="userName">
@@ -47,6 +46,6 @@
 			</id>
 		</attributes>
 	</entity>
-	<entity class="entities.userAnswersId" access="FIELD">
+	<entity access="FIELD" class="entities.userAnswersId">
 	</entity>
 </entity-mappings>
