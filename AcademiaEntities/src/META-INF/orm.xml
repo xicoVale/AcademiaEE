@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd">
+	<entity class="entities.UserRoles" access="FIELD">
+		<table name="userRoles">
+		</table>
+		<attributes>
+			<id name="roleId">
+			</id>
+		</attributes>
+	</entity>
+	<entity class="entities.Users" access="FIELD">
+		<table name="users">
+		</table>
+		<attributes>
+			<id name="userName">
+			</id>
+		</attributes>
+	</entity>
+	<entity class="entities.Inqueries" access="FIELD">
+		<table name="inqueries">
+		</table>
+		<attributes>
+			<id name="inqueryId">
+			</id>
+		</attributes>
+	</entity>
+	<entity class="entities.Questions" access="FIELD">
+		<attributes>
+			<id name="questionId">
+			</id>
+		</attributes>
+	</entity>
+	<entity class="entities.Answers" access="FIELD">
+		<table name="answers">
+		</table>
+		<attributes>
+			<id name="answerId">
+			</id>
+		</attributes>
+	</entity>
+	<entity class="entities.UserAnswers" access="FIELD">
+		<id-class class="entities.UserAnswersPK"/>
+		<attributes>
+			<id name="userName">
+			</id>
+			<id name="answerId">
+			</id>
+		</attributes>
+	</entity>
+	<entity class="entities.userAnswersId" access="FIELD">
+	</entity>
+</entity-mappings>
