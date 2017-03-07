@@ -4,6 +4,7 @@ import static javax.persistence.TemporalType.DATE;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -13,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.JoinColumn;
 
 /**
  * Entity implementation class for Entity: Inqueries
@@ -22,20 +24,20 @@ import javax.persistence.Temporal;
 @Table(name = "inqueries")
 public class Inqueries implements Serializable {
 
-	 
 	@Id
 	@Column(updatable = false)
 	@GeneratedValue
 	private Integer inqueryId; 
-	@OneToMany(mappedBy = "userName", targetEntity = entities.Users.class)
+	@OneToMany(targetEntity = entities.Users.class)
+	@JoinColumn(referencedColumnName = "userName")
 	private String userName; 
 	private String title;
 	@Basic
 	@Temporal(DATE)
-	private LocalDateTime startDate; 
+	private Date startDate; 
 	@Basic
 	@Temporal(DATE)
-	private LocalDateTime endDate;
+	private Date endDate;
 	private static final long serialVersionUID = 1L;	
 	public Inqueries() {
 		super();
@@ -65,19 +67,19 @@ public class Inqueries implements Serializable {
 		this.title = title;
 	}
 	   
-	public LocalDateTime getStartDate() {
+	public Date getStartDate() {
  		return this.startDate;
 	}
 
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 	   
-	public LocalDateTime getEndDate() {
+	public Date getEndDate() {
  		return this.endDate;
 	}
 
-	public void setEndDate(LocalDateTime endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 	

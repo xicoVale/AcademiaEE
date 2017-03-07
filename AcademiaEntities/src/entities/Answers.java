@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import static javax.persistence.CascadeType.ALL;
 
 /**
  * Entity implementation class for Entity: Answers
@@ -23,7 +24,7 @@ public class Answers implements Serializable {
 	@Column(updatable = false, nullable = false)
 	@GeneratedValue
 	private Integer answerId; 
-	@OneToMany(mappedBy = "questionId", targetEntity = entities.Questions.class)
+	@OneToMany(targetEntity = entities.Questions.class)
 	private Integer questionId;
 	@Basic(optional = false)
 	private String answerText;

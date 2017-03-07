@@ -6,6 +6,9 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.IdClass;
+import javax.persistence.AttributeOverride;
+import javax.persistence.Column;
+import javax.persistence.AttributeOverrides;
 
 /**
  * Entity implementation class for Entity: UserAnswers
@@ -13,7 +16,6 @@ import javax.persistence.IdClass;
  */
 @Entity
 @Table(name = "userAnswers")
-@IdClass(entities.UserAnswersPK.class)
 public class UserAnswers implements Serializable {
 
 	@EmbeddedId
