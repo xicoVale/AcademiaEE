@@ -7,9 +7,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import static javax.persistence.CascadeType.ALL;
 
 /**
  * Entity implementation class for Entity: Answers
@@ -24,10 +24,12 @@ public class Answers implements Serializable {
 	@Column(updatable = false, nullable = false)
 	@GeneratedValue
 	private Integer answerId; 
-	@OneToMany(targetEntity = entities.Questions.class)
+	@Column(name = "questionId")
 	private Integer questionId;
 	@Basic(optional = false)
 	private String answerText;
+    private Questions questions;
+	
 	private static final long serialVersionUID = 1L;	
 	public Answers() {
 		super();
@@ -55,6 +57,16 @@ public class Answers implements Serializable {
 
 	public void setAnswerText(String answerText) {
 		this.answerText = answerText;
+	}
+
+	@ManyToOne(optional=false)
+    @JoinColumn(name="QUESTIONID")
+	public Questions getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(Questions questions) {
+		this.questions = questions;
 	}
 	
    

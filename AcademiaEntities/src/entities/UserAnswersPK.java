@@ -13,6 +13,7 @@ public class UserAnswersPK  implements Serializable {
    
 	private String userName;
 	private Integer answerId;
+	
 	private static final long serialVersionUID = 1L;
 
 	public UserAnswersPK() {}

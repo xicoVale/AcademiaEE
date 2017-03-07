@@ -3,7 +3,6 @@ package entities;
 import static javax.persistence.TemporalType.DATE;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -11,10 +10,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
-import javax.persistence.JoinColumn;
 
 /**
  * Entity implementation class for Entity: Inqueries
@@ -28,8 +27,6 @@ public class Inqueries implements Serializable {
 	@Column(updatable = false)
 	@GeneratedValue
 	private Integer inqueryId; 
-	@OneToMany(targetEntity = entities.Users.class)
-	@JoinColumn(referencedColumnName = "userName")
 	private String userName; 
 	private String title;
 	@Basic
@@ -38,7 +35,9 @@ public class Inqueries implements Serializable {
 	@Basic
 	@Temporal(DATE)
 	private Date endDate;
-	private static final long serialVersionUID = 1L;	
+	private Users user;
+	private static final long serialVersionUID = 1L;
+	
 	public Inqueries() {
 		super();
 	} 
@@ -81,6 +80,16 @@ public class Inqueries implements Serializable {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	@ManyToOne(optional=false)
+	@JoinColumn(name="USERNAME")
+	public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
 	}
 	
    

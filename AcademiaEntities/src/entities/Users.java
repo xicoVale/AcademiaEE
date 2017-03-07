@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -21,12 +23,23 @@ public class Users implements Serializable {
 	private String userName; 
 	@Column(insertable = true, nullable = false)
 	private String password; 
-	@Column(nullable = false, table = "users", insertable = true, unique = true)
+	@Column(nullable = false, insertable = true, unique = true)
 	private String salt;
 	@Column(nullable = false)
-	@OneToMany(targetEntity = entities.UserRoles.class, mappedBy = "roleId")
 	private Integer roleId;
-	private static final long serialVersionUID = 1L;	
+	private static final long serialVersionUID = 1L;
+	private UserRoles userRole;
+	
+	@ManyToOne(optional=false)	
+	@JoinColumn(name="ROLEID")
+	public UserRoles getUserRole() {
+		return userRole;
+	}
+
+	public void setUserRole(UserRoles userRole) {
+		this.userRole = userRole;
+	}
+
 	public Users() {
 		super();
 	} 
