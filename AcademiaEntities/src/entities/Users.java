@@ -1,9 +1,12 @@
 package entities;
 
 import java.io.Serializable;
-import java.lang.Integer;
-import java.lang.String;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * Entity implementation class for Entity: Users
@@ -18,12 +21,13 @@ public class Users implements Serializable {
 	private String userName; 
 	@Column(insertable = true, nullable = false)
 	private String password; 
-	@Column(nullable = false, table = "users", insertable = true, unique = true)
+	@Column(nullable = false, insertable = true, unique = true)
 	private String salt;
-	@Column(nullable = false)
-	@OneToMany(targetEntity = entities.UserRoles.class, mappedBy = "roleId")
-	private Integer roleId;
-	private static final long serialVersionUID = 1L;	
+	private static final long serialVersionUID = 1L;
+	@ManyToOne
+	private UserRoles userRole;
+	
+
 	public Users() {
 		super();
 	} 
@@ -52,13 +56,12 @@ public class Users implements Serializable {
 		this.salt = salt;
 	}
 	   
-	public Integer getRoleId() {
- 		return this.roleId;
+	public UserRoles getUserRole() {
+		return userRole;
 	}
 
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
+	public void setUserRole(UserRoles userRole) {
+		this.userRole = userRole;
 	}
-	
    
 }

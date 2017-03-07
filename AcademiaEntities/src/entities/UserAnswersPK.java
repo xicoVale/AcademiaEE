@@ -1,8 +1,6 @@
 package entities;
 
 import java.io.Serializable;
-import java.lang.Integer;
-import java.lang.String;
 
 import javax.persistence.Embeddable;
 
@@ -13,13 +11,13 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class UserAnswersPK  implements Serializable {   
    
-	private String userName;         
+	private String userName;
 	private Integer answerId;
+	
 	private static final long serialVersionUID = 1L;
 
 	public UserAnswersPK() {}
 
-	
 
 	public String getUserName() {
 		return this.userName;

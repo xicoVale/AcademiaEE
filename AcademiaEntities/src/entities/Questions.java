@@ -1,9 +1,13 @@
 package entities;
 
 import java.io.Serializable;
-import java.lang.Integer;
-import java.lang.String;
-import javax.persistence.*;
+
+import javax.persistence.Basic;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  * Entity implementation class for Entity: Questions
@@ -16,12 +20,13 @@ public class Questions implements Serializable {
 	 
 	@Id
 	@GeneratedValue
-	private Integer questionId; 
-	@OneToMany(targetEntity = entities.Inqueries.class, mappedBy = "inqueryId")
-	private Integer inqueryId; 
+	private Integer questionId;
 	@Basic(optional = false)
 	private String questionText;
-	private static final long serialVersionUID = 1L;	
+	private static final long serialVersionUID = 1L;
+	@ManyToOne
+	private Inqueries inquery;
+	
 	public Questions() {
 		super();
 	} 
@@ -34,13 +39,6 @@ public class Questions implements Serializable {
 		this.questionId = questionId;
 	}
 	   
-	public Integer getInqueryId() {
- 		return this.inqueryId;
-	}
-
-	public void setInqueryId(Integer inqueryId) {
-		this.inqueryId = inqueryId;
-	}
 	   
 	public String getQuestionText() {
  		return this.questionText;
@@ -48,6 +46,14 @@ public class Questions implements Serializable {
 
 	public void setQuestionText(String questionText) {
 		this.questionText = questionText;
+	}
+	
+	public Inqueries getInquery() {
+		return inquery;
+	}
+
+	public void setInquery(Inqueries inquery) {
+		this.inquery = inquery;
 	}
 	
    

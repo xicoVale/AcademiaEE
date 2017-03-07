@@ -3,14 +3,14 @@ package entities;
 import static javax.persistence.TemporalType.DATE;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -22,21 +22,21 @@ import javax.persistence.Temporal;
 @Table(name = "inqueries")
 public class Inqueries implements Serializable {
 
-	 
 	@Id
 	@Column(updatable = false)
 	@GeneratedValue
-	private Integer inqueryId; 
-	@OneToMany(mappedBy = "userName", targetEntity = entities.Users.class)
-	private String userName; 
+	private Integer inqueryId;
 	private String title;
 	@Basic
 	@Temporal(DATE)
-	private LocalDateTime startDate; 
+	private Date startDate; 
 	@Basic
 	@Temporal(DATE)
-	private LocalDateTime endDate;
-	private static final long serialVersionUID = 1L;	
+	private Date endDate;
+	@ManyToOne
+	private Users user;
+	private static final long serialVersionUID = 1L;
+	
 	public Inqueries() {
 		super();
 	} 
@@ -48,15 +48,6 @@ public class Inqueries implements Serializable {
 	public void setInqueryId(Integer inqueryId) {
 		this.inqueryId = inqueryId;
 	}
-	   
-	public String getUserName() {
- 		return this.userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	   
 	public String getTitle() {
  		return this.title;
 	}
@@ -65,20 +56,29 @@ public class Inqueries implements Serializable {
 		this.title = title;
 	}
 	   
-	public LocalDateTime getStartDate() {
+	public Date getStartDate() {
  		return this.startDate;
 	}
 
-	public void setStartDate(LocalDateTime startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 	   
-	public LocalDateTime getEndDate() {
+	public Date getEndDate() {
  		return this.endDate;
 	}
 
-	public void setEndDate(LocalDateTime endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	
+	public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
 	}
 	
    
