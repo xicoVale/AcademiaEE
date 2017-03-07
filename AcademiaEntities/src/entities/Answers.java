@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -23,11 +22,10 @@ public class Answers implements Serializable {
 	@Id
 	@Column(updatable = false, nullable = false)
 	@GeneratedValue
-	private Integer answerId; 
-	@Column(name = "questionId")
-	private Integer questionId;
+	private Integer answerId;
 	@Basic(optional = false)
 	private String answerText;
+	@ManyToOne
     private Questions questions;
 	
 	private static final long serialVersionUID = 1L;	
@@ -43,14 +41,6 @@ public class Answers implements Serializable {
 		this.answerId = answerId;
 	}
 	   
-	public Integer getQuestionId() {
- 		return this.questionId;
-	}
-
-	public void setQuestionId(Integer questionId) {
-		this.questionId = questionId;
-	}
-	   
 	public String getAnswerText() {
  		return this.answerText;
 	}
@@ -59,8 +49,7 @@ public class Answers implements Serializable {
 		this.answerText = answerText;
 	}
 
-	@ManyToOne(optional=false)
-    @JoinColumn(name="QUESTIONID")
+	
 	public Questions getQuestions() {
 		return questions;
 	}
