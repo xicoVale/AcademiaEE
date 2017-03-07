@@ -1,5 +1,6 @@
 package beans;
 
+import java.io.Serializable;
 import java.security.SecureRandom;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -9,11 +10,13 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import entities.Users;
+
 /**
  * Session Bean implementation class QueryBean
  */
 @Stateless
-public class QueryBean implements QueryBeanRemote, QueryBeanLocal {
+public class QueryBean implements QueryBeanRemote, QueryBeanLocal,Serializable {
 	
 //	static Statement stmt = null;
 	@Inject EntityManager em;
@@ -47,6 +50,13 @@ public class QueryBean implements QueryBeanRemote, QueryBeanLocal {
 		em.createQuery("INSERT INTO users (USERNAME,PASSWORD,SALT) VALUES ('"+userName+"','"+code+"','"+saltString+"'");		
 		
 		
+	}
+
+	@Override
+	public Users logIn(String userName, String password) {
+		em.createQuery("SELECT ")
+		
+		return null;
 	}
 
 
