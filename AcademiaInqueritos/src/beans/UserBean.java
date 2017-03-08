@@ -38,13 +38,7 @@ public class UserBean implements Serializable {
 
 
 	public Users getUser() {
-		
 		return this.user;
-	}
-
-
-	public void setUser(Users user) {
-		this.user=user;
 	}
 
 
