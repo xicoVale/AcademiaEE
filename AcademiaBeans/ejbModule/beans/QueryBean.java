@@ -64,6 +64,13 @@ public class QueryBean implements QueryBeanRemote, QueryBeanLocal,Serializable {
 		return x;
 	}
 
+	@Override
+	public Users logIn(String userName, String password) {
+		em.createQuery("SELECT ")
+		
+		return null;
+	}
+
 
 
 
