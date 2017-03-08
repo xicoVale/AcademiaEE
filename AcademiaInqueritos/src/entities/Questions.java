@@ -14,7 +14,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name = "questions")
+@Table
 public class Questions implements Serializable {
 
 	 

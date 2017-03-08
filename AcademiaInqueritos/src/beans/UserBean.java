@@ -27,11 +27,7 @@ public class UserBean implements Serializable {
 	@PersistenceContext (name="AcademiaEntities")
 	private EntityManager em;
 	
-// Faz o mesmo que as duas linhas anteriores
-//	EntityManagerFactory emf = Persistence.createEntityManagerFactory("AcademiaEntities");
-//	EntityManager em = emf.createEntityManager();
-	
-	private Users user=new Users();
+	private Users user = new Users();
 	
   
 /**   Default constructor.   **/   
@@ -45,7 +41,7 @@ public class UserBean implements Serializable {
 
 
 	public void setUser(Users user) {
-		this.user=user;
+		this.user = user;
 	}
 
 	private Boolean userExists(String userName) {
@@ -84,6 +80,12 @@ public class UserBean implements Serializable {
 		
 	}
 
+	/**
+	 * Logs a user into the site
+	 * 
+	 * @param user - The user to be added
+	 * @return
+	 */
 	public String login(Users user){
 		this.user = em.find(Users.class, user.getUserName());
 		
