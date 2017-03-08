@@ -29,8 +29,8 @@ public class QueryBean implements QueryBeanRemote, QueryBeanLocal,Serializable {
     	
     }
 
-	@Override
-	public Boolean userExists(String userName) {
+
+	private Boolean userExists(String userName) {
 		Boolean exist;
 		exist=!em.createQuery("SELECT userName FROM users"
 				+ " WHERE USERNAME = "+ userName+";").getResultList().isEmpty();
@@ -39,24 +39,29 @@ public class QueryBean implements QueryBeanRemote, QueryBeanLocal,Serializable {
 	}
 
 	@Override
-	public void registerUser(String userName, String password) {
+	public void registerUser(Users user) throws {
+		
+		if(userExists(userName)){
+			throws
+			
+		}else{	
 		
 		final Random r = new SecureRandom();
 		byte[] salt = new byte[32];
 		r.nextBytes(salt);
 		String saltString = salt.toString();
-		String code = ((Integer)(password+saltString).hashCode()).toString();
+		String code = ((Integer)(user.getPassword()+saltString).hashCode()).toString();
 		
-		em.createQuery("INSERT INTO users (USERNAME,PASSWORD,SALT) VALUES ('"+userName+"','"+code+"','"+saltString+"'");		
-		
+		em.createQuery("INSERT INTO users (USERNAME,PASSWORD,SALT,USERROLE_ROLEID) VALUES ('"+user.getUserName()+"','"+code+"','"+saltString+"',"+3);		
+		}
 		
 	}
 
 	@Override
 	public Users logIn(String userName, String password) {
-		em.createQuery("SELECT ")
+		Users x =  (Users) em.createQuery("SELECT * FROM users WHERE USERNAME= "+userName).getResultList();
 		
-		return null;
+		return x;
 	}
 
 
