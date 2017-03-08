@@ -2,9 +2,9 @@ package entities;
 
 import java.io.Serializable;
 
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 /**
@@ -13,37 +13,30 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "userAnswers")
+@IdClass(UserAnswersPK.class)
 public class UserAnswers implements Serializable {
 
-	@EmbeddedId
-	private UserAnswersPK id;
-	@ManyToOne
-	private Users user;
-	@ManyToOne
-	private Answers answer;
+	@Id
+	private Users userName;
+	@Id
+	private Answers answerId;
 	
 	private static final long serialVersionUID = 1L;	
 	public UserAnswers() {
 		super();
 	}
-	public UserAnswersPK getId() {
-		return id;
+	
+	public Users getUserName() {
+		return userName;
 	}
-	public void setId(UserAnswersPK id) {
-		this.id = id;
+	public void setUserName(Users userName) {
+		this.userName = userName;
 	}
 	
-	public Users getUser() {
-		return user;
+	public Answers getAnswerId() {
+		return answerId;
 	}
-	public void setUser(Users user) {
-		this.user = user;
-	}
-	
-	public Answers getAnswer() {
-		return answer;
-	}
-	public void setAnswer(Answers answer) {
-		this.answer = answer;
+	public void setAnswerId(Answers answerId) {
+		this.answerId = answerId;
 	}   
 }

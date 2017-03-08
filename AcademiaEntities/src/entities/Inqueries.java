@@ -26,6 +26,7 @@ public class Inqueries implements Serializable {
 	@Column(updatable = false)
 	@GeneratedValue
 	private Integer inqueryId;
+	@Basic(optional = false)
 	private String title;
 	@Basic
 	@Temporal(DATE)
