@@ -8,14 +8,17 @@ import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import entities.Inqueries;
 import entities.UserRoles;
 import entities.Users;
+import interfaces.UserBeanLocal;
+import interfaces.UserBeanRemote;
 
 /**
  * Session Bean implementation class QueryBean
  */
 @SessionScoped
-public class QueryBean implements QueryBeanRemote, QueryBeanLocal, Serializable {
+public class UserBean implements UserBeanRemote, UserBeanLocal, Serializable {
 	
 	/**
 	 * 
@@ -30,10 +33,10 @@ public class QueryBean implements QueryBeanRemote, QueryBeanLocal, Serializable 
 //	EntityManager em = emf.createEntityManager();
 	
 	private Users user=new Users();
-	
+	private Inqueries inquery= new Inqueries();
   
 /**   Default constructor.   **/   
-    public QueryBean() {
+    public UserBean() {
         
     	
     }
@@ -77,7 +80,7 @@ public class QueryBean implements QueryBeanRemote, QueryBeanLocal, Serializable 
 	}
 
 	@Override
-	public String logIn(Users user){
+	public String login(Users user){
 		this.user = em.find(Users.class, user.getUserName());
 		
 		if(this.user == null){
@@ -110,6 +113,10 @@ public class QueryBean implements QueryBeanRemote, QueryBeanLocal, Serializable 
 		this.user=user;
 	}
 
+
+
+	
+	
 
 
 
