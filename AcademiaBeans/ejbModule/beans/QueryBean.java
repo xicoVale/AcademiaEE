@@ -2,74 +2,114 @@ package beans;
 
 import java.io.Serializable;
 import java.security.SecureRandom;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.Random;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
+import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
+import entities.UserRoles;
 import entities.Users;
 
 /**
  * Session Bean implementation class QueryBean
  */
-@Stateless
-public class QueryBean implements QueryBeanRemote, QueryBeanLocal,Serializable {
+@SessionScoped
+public class QueryBean implements QueryBeanRemote, QueryBeanLocal, Serializable {
 	
-//	static Statement stmt = null;
-	@Inject EntityManager em;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@PersistenceContext (name="AcademiaEntities")
+	private EntityManager em;
 	
+// Faz o mesmo que as duas linhas anteriores
+//	EntityManagerFactory emf = Persistence.createEntityManagerFactory("AcademiaEntities");
+//	EntityManager em = emf.createEntityManager();
+	
+	private Users user=new Users();
 	
   
-//    Default constructor.      
+/**   Default constructor.   **/   
     public QueryBean() {
-        // TODO Auto-generated constructor stub
+        
     	
     }
 
 
 	private Boolean userExists(String userName) {
-		Boolean exist;
-		exist=!em.createQuery("SELECT userName FROM users"
-				+ " WHERE USERNAME = "+ userName+";").getResultList().isEmpty();
+		Users user = em.find(Users.class, userName);
 	
-		return exist;
+		if (user == null) {
+			return false;
+		}
+		else {
+			return true;
+		}
 	}
 
 	@Override
-	public void registerUser(Users user) throws {
-		
-		if(userExists(userName)){
-			throws
+	public String registerUser(Users user) {
+
+		if (userExists(user.getUserName())) {
+			return "UserExists";
+
+		} 
+		else {
+			final Random r = new SecureRandom();
+			byte[] salt = new byte[32];
+			r.nextBytes(salt);
+			String saltString = salt.toString();
+			String code = ((Integer) (user.getPassword() + saltString).hashCode()).toString();
+			user.setPassword(code);
+			user.setSalt(saltString);
 			
-		}else{	
-		
-		final Random r = new SecureRandom();
-		byte[] salt = new byte[32];
-		r.nextBytes(salt);
-		String saltString = salt.toString();
-		String code = ((Integer)(user.getPassword()+saltString).hashCode()).toString();
-		
-		em.createQuery("INSERT INTO users (USERNAME,PASSWORD,SALT,USERROLE_ROLEID) VALUES ('"+user.getUserName()+"','"+code+"','"+saltString+"',"+3);		
+			UserRoles role = em.find(UserRoles.class, 3);
+			user.setUserRole(role);
+			
+			em.persist(user);
+			
+			return "success";
 		}
 		
 	}
 
 	@Override
-	public Users logIn(String userName, String password) {
-		Users x =  (Users) em.createQuery("SELECT * FROM users WHERE USERNAME= "+userName).getResultList();
+	public String logIn(Users user){
+		this.user = em.find(Users.class, user.getUserName());
 		
-		return x;
+		if(this.user == null){
+			return "userNotExists";
+			
+		}else{	
+			String salt = this.user.getSalt();
+			String code = ((Integer) (user.getPassword() + salt).hashCode()).toString();
+			if(code.equals(this.user.getPassword())){
+				return "success";
+			}
+			else {
+				this.user = null;
+				return "passwordFail";
+			}
+		}
+		
 	}
 
+
 	@Override
-	public Users logIn(String userName, String password) {
-		em.createQuery("SELECT ")
+	public Users getUser() {
 		
-		return null;
+		return this.user;
 	}
+
+
+	@Override
+	public void setUser(Users user) {
+		this.user=user;
+	}
+
 
 
 
