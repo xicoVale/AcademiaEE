@@ -3,7 +3,8 @@ package beans;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.ejb.Stateless;
+import javax.annotation.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -12,7 +13,8 @@ import entities.Inqueries;
 /**
  * Session Bean implementation class InqueriesBean
  */
-@Stateless
+@ManagedBean
+@SessionScoped
 public class InqueriesBean implements Serializable{
 
 	private static final long serialVersionUID = -7676636099454676162L;

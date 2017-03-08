@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.Random;
 
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +15,7 @@ import entities.Users;
 /**
  * Session Bean implementation class QueryBean
  */
+@ManagedBean
 @SessionScoped
 public class UserBean implements Serializable {
 	
