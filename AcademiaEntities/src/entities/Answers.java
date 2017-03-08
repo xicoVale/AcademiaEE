@@ -57,6 +57,31 @@ public class Answers implements Serializable {
 	public void setQuestions(Questions questions) {
 		this.questions = questions;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((answerId == null) ? 0 : answerId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Answers other = (Answers) obj;
+		if (answerId == null) {
+			if (other.answerId != null)
+				return false;
+		} else if (!answerId.equals(other.answerId))
+			return false;
+		return true;
+	}
 	
    
 }

@@ -38,5 +38,36 @@ public class UserAnswers implements Serializable {
 	}
 	public void setAnswerId(Answers answerId) {
 		this.answerId = answerId;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((answerId == null) ? 0 : answerId.hashCode());
+		result = prime * result + ((userName == null) ? 0 : userName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UserAnswers other = (UserAnswers) obj;
+		if (answerId == null) {
+			if (other.answerId != null)
+				return false;
+		} else if (!answerId.equals(other.answerId))
+			return false;
+		if (userName == null) {
+			if (other.userName != null)
+				return false;
+		} else if (!userName.equals(other.userName))
+			return false;
+		return true;
 	}   
 }

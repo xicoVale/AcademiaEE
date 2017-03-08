@@ -22,6 +22,7 @@ import javax.persistence.Temporal;
 @Table(name = "inqueries")
 public class Inqueries implements Serializable {
 
+	
 	@Id
 	@Column(updatable = false)
 	@GeneratedValue
@@ -81,6 +82,29 @@ public class Inqueries implements Serializable {
 	public void setUser(Users user) {
 		this.user = user;
 	}
-	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((inqueryId == null) ? 0 : inqueryId.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Inqueries other = (Inqueries) obj;
+		if (inqueryId == null) {
+			if (other.inqueryId != null)
+				return false;
+		} else if (!inqueryId.equals(other.inqueryId))
+			return false;
+		return true;
+	}
    
 }
