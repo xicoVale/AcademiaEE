@@ -33,7 +33,7 @@ public class UserBean implements UserBeanRemote, UserBeanLocal, Serializable {
 //	EntityManager em = emf.createEntityManager();
 	
 	private Users user=new Users();
-	private Inqueries inquery= new Inqueries();
+	
   
 /**   Default constructor.   **/   
     public UserBean() {
