@@ -77,7 +77,7 @@ public class QueryBean implements QueryBeanRemote, QueryBeanLocal, Serializable 
 	}
 
 	@Override
-	public String logIn(Users user){
+	public String login(Users user){
 		this.user = em.find(Users.class, user.getUserName());
 		
 		if(this.user == null){
