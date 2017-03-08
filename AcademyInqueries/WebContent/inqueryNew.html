@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<h:outputStylesheet library="css" name="styles.css" />
+	<title>#{msgs.title}</title>
+</h:head>
+
+<h:body>
+	<h:form>
+		<h1>#{msgs.enterInqueryNewBean}</h1>
+		<h:panelGrid columns="10">
+		
+		<h:outputText value="Inquery title: "></h:outputText>
+		#{msgs.title}
+			<h:inputText id="title" value="#{InqueryNewBean.title}" required="true"></h:inputText>
+			<h:message for="title" styleClass="errorMessage" />
+
+		<h:outputText value="Start date: "></h:outputText>
+		#{msgs.startDate}   
+			<h:inputText id="startDate" value="#{InqueryNewBean.startDate}"	required="true">
+			<f:convertDateTime pattern="hh:mm; dd-mm-yyyy" />
+			</h:inputText>
+			<h:message for="startDate" styleClass="errorMessage" />
+
+		<h:outputText value="Expiration date: "></h:outputText>
+		#{msgs.expirationDate}   
+			<h:inputText id="expirationDate" value="#{InqueryNewBean.expirationDate}" required="true">
+			<f:convertDateTime pattern="hh:mm; dd-mm-yyyy" />
+			</h:inputText>
+			<h:message for="expirationDate" styleClass="errorMessage" />
+			</h:panelGrid>
+	</h:form>
+</h:body>
+	
+	<h:commandButton value="Login" action="welcome"></h:commandButton>
+	<h:commandButton value="Regist" action="welcome"></h:commandButton>
+</html>
