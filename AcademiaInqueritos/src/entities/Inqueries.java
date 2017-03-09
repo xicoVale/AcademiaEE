@@ -19,7 +19,7 @@ import javax.persistence.Temporal;
  *
  */
 @Entity
-@Table
+@Table(name="Inqueries")
 public class Inqueries implements Serializable {
 
 	

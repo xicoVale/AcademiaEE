@@ -4,10 +4,12 @@ import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.Random;
 
+import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 
 import entities.UserRoles;
 import entities.Users;
@@ -23,9 +25,11 @@ public class UserBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	@PersistenceContext (name="AcademiaEntities")
+	@PersistenceContext
 	private EntityManager em;
+	
+	@Resource
+	private UserTransaction utx;
 	
 	private Users user = new Users();
 	
@@ -44,6 +48,17 @@ public class UserBean implements Serializable {
 		this.user = user;
 	}
 
+
+	public EntityManager getEm() {
+		return em;
+	}
+
+
+	public void setEm(EntityManager em) {
+		this.em = em;
+	}
+
+
 	private Boolean userExists(String userName) {
 		Users user = em.find(Users.class, userName);
 	
@@ -55,7 +70,7 @@ public class UserBean implements Serializable {
 		}
 	}
 
-	public String registerUser(Users user) {
+	public String registerUser(Users user)  throws Exception{
 
 		if (userExists(user.getUserName())) {
 			return "UserExists";
@@ -73,8 +88,10 @@ public class UserBean implements Serializable {
 			UserRoles role = em.find(UserRoles.class, 3);
 			user.setUserRole(role);
 			
+			utx.begin();
 			em.persist(user);
-			
+			utx.commit();
+	
 			return "success";
 		}
 		
