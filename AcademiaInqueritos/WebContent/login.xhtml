@@ -21,27 +21,25 @@
 
 			<h:outputText value="Name"></h:outputText>
 			  #{msgs.name}
-            <h:inputText id="name"
-            			 value="#{userBean.user.userName}"
+            <h:inputText id="name" value="#{userBean.user.userName}" label="Name"
             			 required="true" requiredMessage="Please enter a user name."></h:inputText>
 			<h:message for="name" errorClass="errorMessage" />
 
 
 			<h:outputText value="Password"></h:outputText>
 			  #{msgs.password}
-            <h:inputSecret id="password"
-            			   value="#{userBean.user.password}"
-            			   required="true" requiredMessage="Please enter a password.">
+            <h:inputSecret id="password" value="#{userBean.user.password}" label="Password"
+            			  required="true" requiredMessage="Please enter a password.">
 					<f:validateLength minimum="6" /></h:inputSecret>
-			<h:message for="password" errorClass="errorMessage" />
+			<h:message for="password" styleClass="errorMessage" />
 			</h:panelGrid>
+			
 			<br />
 			<h:commandButton value="Login" action="#{userBean.login(userBean.user)}"></h:commandButton>
 			<h:commandButton value="Register" action="#{userBean.registerUser(userBean.user)}"></h:commandButton>
 		</h:form>
 
 		<!-- falta validar o botão login: user, suepruser ou admin -->
-		<!-- corrigir a mensagem de erro -->
 		
 	</ui:define>
 </ui:composition>

@@ -20,19 +20,14 @@
 				<h:outputText id="expDate" value="Expiration date"></h:outputText>
 
 				<h:panelGroup style="display:block; text-align:left">
-					<h:selectOneRadio value="#{user.inquery}" layout="pageDirection" required="true">
-					<h:message for="name" styleClass="errorMessage" />
-						<t:selectItem itemLabel="Inquery 1	by Charles" />
-						<t:selectItem itemLabel="Inquery 2	by Richard" />
-								
-		
+					<h:selectOneRadio id="inquery" value="#{inqueriesbean.inqueries}" label="Inquery" layout="pageDirection">
+						<f:selectItem value="#{inqueriesbean.userAnswer}"/>
 					</h:selectOneRadio>
 				</h:panelGroup>
 			</h:panelGrid>
 			<p />
-			<h:commandButton value="Start" action="login"></h:commandButton>
+			<h:commandButton value="Start" action="inqueryStart"></h:commandButton>
 			<h:commandButton value="Stats" action="stats"></h:commandButton>
-
 		</h:form>
 	</ui:define>
 </ui:composition>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PROCESS model-entity="JSFProcess">
+ <PROCESS-ITEM NAME="rules:#login.xhtml" PATH="/login.xhtml"
+  SHAPE="32,17,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#login.xhtml:0" NAME="item"
+   PATH="/login.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="userExists:#{userBean.registerUser(userBean.user)}:#login.xhtml"
+    NAME="output" PATH="/login.xhtml" TARGET="rules:#login.xhtml"
+    TITLE="#{userBean.registerUser(userBean.user)}:userExists" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{userBean.registerUser(userBean.user)}:#welcome.xhtml"
+    NAME="output1" PATH="/welcome.xhtml" TARGET="rules:#welcome.xhtml"
+    TITLE="#{userBean.registerUser(userBean.user)}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="userNotExists:#{userBean.login(userBean.user)}:#login.xhtml"
+    NAME="output2" PATH="/login.xhtml" TARGET="rules:#login.xhtml"
+    TITLE="#{userBean.login(userBean.user)}:userNotExists" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{userBean.login(userBean.user)}:#welcome.xhtml"
+    NAME="output3" PATH="/welcome.xhtml" TARGET="rules:#welcome.xhtml"
+    TITLE="#{userBean.login(userBean.user)}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#welcome.xhtml" PATH="/welcome.xhtml"
+  SHAPE="256,33,0,0" model-entity="JSFProcessGroup"/>
+ <PROCESS-ITEM NAME="rules:#inqueryNew.html" PATH="/inqueryNew.html"
+  SHAPE="32,225,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#inqueryNew.html:0" NAME="item"
+   PATH="/inqueryNew.html" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{inqueriesBean.registerInquery(inqueriesBean.inquery)}:#welcome.xhtml"
+    NAME="output" PATH="/welcome.xhtml" TARGET="rules:#welcome.xhtml"
+    TITLE="#{inqueriesBean.registerInquery(inqueriesBean.inquery)}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="someNameAndCoincidenceDates:#{inqueriesBean.registerInquery(inqueriesBean.inquery)}:#inqueryNew.html"
+    NAME="output1" PATH="/inqueryNew.html"
+    TARGET="rules:#inqueryNew.html"
+    TITLE="#{inqueriesBean.registerInquery(inqueriesBean.inquery)}:someNameAndCoincidenceDates" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{inqueriesBean.registerInqueryNext(inqueriesBean.inquery)}:#inqueryNewNext.html"
+    NAME="output2" PATH="/inqueryNewNext.html"
+    TARGET="rules:#inqueryNewNext.html"
+    TITLE="#{inqueriesBean.registerInqueryNext(inqueriesBean.inquery)}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="someNameAndCoincidenceDates:#{inqueriesBean.registerInqueryNext(inqueriesBean.inquery)}:#inqueryNew.html"
+    NAME="output3" PATH="/inqueryNew.html"
+    TARGET="rules:#inqueryNew.html"
+    TITLE="#{inqueriesBean.registerInqueryNext(inqueriesBean.inquery)}:someNameAndCoincidenceDates" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#inqueryNewNext.html"
+  PATH="/inqueryNewNext.html" SHAPE="304,353,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#inqueryNewNext.html:0" NAME="item"
+   PATH="/inqueryNewNext.html" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{inqueryBean.registerQuestionNext(inqueryBean.inquery)}:#inqueryNewNext.html"
+    NAME="output" PATH="/inqueryNewNext.html"
+    TARGET="rules:#inqueryNewNext.html"
+    TITLE="#{inqueryBean.registerQuestionNext(inqueryBean.inquery)}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{inqueryBean.registerQuestion(inqueryBean.inquery)}:#welcome.xhtml"
+    NAME="output1" PATH="/welcome.xhtml" TARGET="rules:#welcome.xhtml"
+    TITLE="#{inqueryBean.registerQuestion(inqueryBean.inquery)}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+</PROCESS>

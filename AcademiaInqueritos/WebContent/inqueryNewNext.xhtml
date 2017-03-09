@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+
+		<h:head>
+			<h:outputStylesheet library="css" name="styles.css" />
+			<title>#{msgs.title}</title>
+		</h:head>
+		<h:body>
+			<h:form>
+				<div><h1>#{msgs.enterInqueriesBean}</h1>
+					<h:panelGrid columns="4">
+
+							<h:outputText value="Question:"></h:outputText>
+			#{msgs.questionText}
+				<h:inputText id="question"
+								value="#{inqueriesBean.question.questionText}" required="true"
+								requiredMessage="Please enter a question."></h:inputText>
+							<h:message for="question" styleClass="errorMessage" />
+
+							<h:outputText value="Answers: "></h:outputText>
+			#{msgs.answerText}
+					<h:inputText id="answer1"
+								value="#{inqueriesBean.answer.answerText[0]}" label="Answer1"
+								required="true" requiredMessage="Please enter an answer."></h:inputText>
+							<h:message for="Answer1" styleClass="errorMessage" />
+
+							<h:inputText id="answer2"
+								value="#{inqueriesBean.answer.answerText[1]}" label="Answer2"
+								required="true" requiredMessage="Please enter an answer."></h:inputText>
+							<h:message for="Answer2" styleClass="errorMessage" />
+
+							<h:inputText id="answer3"
+								value="#{inqueriesBean.answer.answerText[2]}" label="Answer3"
+								required="true" requiredMessage="Please enter an answer."></h:inputText>
+							<h:message for="Answer3" styleClass="errorMessage" />
+
+							<h:inputText id="answer4"
+								value="#{inqueriesBean.answer.answerText[3]}" label="Answer4"
+								required="true" requiredMessage="Please enter an answer."></h:inputText>
+							<h:message for="Answer4" styleClass="errorMessage" />
+					</h:panelGrid>
+				</div>
+
+				<h:commandButton value="Back" action="welcome"></h:commandButton>
+				<h:commandButton value="Next"
+					action="#{inqueryBean.registerQuestionNext(inqueryBean.inquery)}"></h:commandButton>
+				<h:commandButton value="Finish"
+					action="#{inqueryBean.registerQuestion(inqueryBean.inquery)}"></h:commandButton>
+
+
+				<div><h:outputText value="#{inqueriesBean.inquery.title}"></h:outputText>
+					 <h:outputText value="#{inqueriesBean.inquery.startDate}"></h:outputText>
+					 <h:outputText value="#{inqueriesBean.inquery.endDate}"></h:outputText>
+					 <h:outputText value="#{inqueriesBean.question.questionText}"></h:outputText>
+					 <h:outputText value="#{inqueriesBean.answer.answerText[0]}"></h:outputText>
+					 <h:outputText value="#{inqueriesBean.answer.answerText[1]}"></h:outputText>
+					 <h:outputText value="#{inqueriesBean.answer.answerText[2]}"></h:outputText>
+					 <h:outputText value="#{inqueriesBean.answer.answerText[3]}"></h:outputText>
+				</div>
+				
+					<h:commandButton value="Edit" action="inqueryEdit"></h:commandButton>
+
+			</h:form>
+		</h:body>
+	</ui:define>
+</ui:composition>
+</html>
