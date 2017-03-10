@@ -1,7 +1,10 @@
 package beans;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.annotation.ManagedBean;
@@ -33,6 +36,7 @@ public class InqueriesBean implements Serializable {
 	private Questions question = new Questions();
 	private ArrayList<Answers> answers = new ArrayList<Answers>();
 	private ArrayList<Questions> questionArray = new ArrayList<Questions>();
+	private ArrayList<Inqueries> inqueries = new ArrayList<Inqueries>();
 
 	/**
 	 * Default constructor.
@@ -140,6 +144,14 @@ public class InqueriesBean implements Serializable {
 			return "success";
 		}
 	}
+	
+//	public String showInqueries(){
+//		 
+//		Date today = new Date((DateTimeFormatter.ofPattern("yyyy/MM/dd").format(LocalDate.now())));
+//		 this.
+//		 
+//		
+//	}
 
 	public Inqueries getInquery() {
 		return inquery;
@@ -149,7 +161,18 @@ public class InqueriesBean implements Serializable {
 		this.inquery = inquery;
 	}
 
+	public ArrayList<Inqueries> getInqueries() {
+		return inqueries;
+	}
+
+	public void setInqueries(ArrayList<Inqueries> inqueries) {
+		this.inqueries = inqueries;
+	}
+	
+	
 	// QUESTIONS
+
+
 
 	public String registerQuestion(Questions question) throws Exception {
 		question.setInquery(inquery);
