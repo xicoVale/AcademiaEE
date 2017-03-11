@@ -8,15 +8,17 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.Resource;
+import javax.ejb.ScheduleExpression;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ApplicationScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -28,7 +30,7 @@ import entities.UserRoles;
 import entities.Users;
 
 @ManagedBean
-@RequestScoped
+@ApplicationScoped
 public class BackupBean implements Serializable {
 
 	private static final long serialVersionUID = -7833608034425721917L;
@@ -38,7 +40,11 @@ public class BackupBean implements Serializable {
 	@Resource
 	private TimerService timerService;
 	
-	private String backupDate;
+	@Resource 
+	private Timer recurrentTimer;
+	
+	private String backupDate = new String();
+	private String frequency = new String();
 	
 	private class Backup implements Serializable{
 		private static final long serialVersionUID = -4351092081590712889L;
@@ -126,7 +132,7 @@ public class BackupBean implements Serializable {
 	 * @throws IOException
 	 */
 	@Timeout
-	public String backup() throws FileNotFoundException, IOException {
+	public void backup() throws FileNotFoundException, IOException {
 		Backup backup = new Backup();
 		
 		backup.setData(em);
@@ -134,7 +140,10 @@ public class BackupBean implements Serializable {
 		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("C://dump.bin"));
 		oos.writeObject(backup);
 		oos.close();
-		return "success";
+		
+		if (!frequency.equals("")) {
+			recurrentTimer(frequency);
+		}
 	}
 	
 	/**
@@ -143,11 +152,32 @@ public class BackupBean implements Serializable {
 	 * @return
 	 * @throws ParseException
 	 */
-	public String scheduleBackup(String backupDate) throws ParseException {
+	public String scheduleBackup(String backupDate) {
 		SimpleDateFormat formatter = new SimpleDateFormat("DD/MM/YYYY");
-		Date date = formatter.parse(backupDate);
-		
-		timerService.createSingleActionTimer(date, new TimerConfig());
+		Date date;
+		try {
+			date = formatter.parse(backupDate);
+			timerService.createSingleActionTimer(date, new TimerConfig());
+			return "success";
+			
+		} catch (ParseException e) {
+			return "wrongDateFormat";
+		}
+	}
+	
+	/**
+	 * Schedules a recurring backup to occur every frequency months
+	 * @param frequency
+	 * @return
+	 */
+	public String recurrentTimer(String frequency) {
+		this.frequency = frequency;
+		int duration = Integer.parseInt(frequency);
+
+		ScheduleExpression schedule = new ScheduleExpression();
+		schedule.month(Calendar.MONTH + duration);
+
+		recurrentTimer = timerService.createCalendarTimer(schedule);
 		
 		return "success";
 	}
