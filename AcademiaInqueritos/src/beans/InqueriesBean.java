@@ -47,7 +47,7 @@ public class InqueriesBean implements Serializable {
 	}
 	
 	private Boolean verifySameNameAndSameDate(Inqueries inquery) {
-		ArrayList<Inqueries> inqueries = (ArrayList<Inqueries>) em.createQuery("FROM Inqueries WHERE TITLE LIKE '" + inquery.getTitle() + "'").getResultList();
+		ArrayList<Inqueries> inqueries = (ArrayList<Inqueries>) em.createNativeQuery("SELECT * FROM Inqueries WHERE TITLE LIKE '" + inquery.getTitle() + "'").getResultList();
 
 		if (inqueries.isEmpty()) {
 			return false;
@@ -93,7 +93,7 @@ public class InqueriesBean implements Serializable {
 			utx.begin();
 			em.persist(inquery);
 			utx.commit();
-			this.inquery = (Inqueries) em.createQuery(
+			this.inquery = (Inqueries) em.createNativeQuery(
 					"SELECT * FROM (SELECT * FROM Inqueries WHEN USER_USERNAME= '" + inquery.getUser().getUserName()
 							+ "' AND TITLE= '" + inquery.getTitle() + "') AS I WHEN INQUERYID= MAX(INQUERYID) ");
 			registerQuestion(this.question);
@@ -110,7 +110,7 @@ public class InqueriesBean implements Serializable {
 			utx.begin();
 			em.persist(inquery);
 			utx.commit();
-			this.inquery = (Inqueries) em.createQuery(
+			this.inquery = (Inqueries) em.createNativeQuery(
 					"SELECT * FROM (SELECT * FROM Inqueries WHEN USER_USERNAME= '" + inquery.getUser().getUserName()
 							+ "' AND TITLE= '" + inquery.getTitle() + "') AS I WHEN INQUERYID= MAX(INQUERYID) ");
 			registerQuestion(this.question);
@@ -125,7 +125,7 @@ public class InqueriesBean implements Serializable {
 			return "inqueryNotExist";
 		} else {
 
-			this.questionArray = (ArrayList<Questions>) em.createQuery("SELECT * FROM Questions WHEN INQUERY_INQUERYID= '" + inquery.getInqueryId() + "'").getResultList();
+			this.questionArray = (ArrayList<Questions>) em.createNativeQuery("SELECT * FROM Questions WHEN INQUERY_INQUERYID= '" + inquery.getInqueryId() + "'").getResultList();
 
 			StringBuilder query = new StringBuilder();
 			query.append("SELECT * FROM Answers WHEN QUESTIONS_QUESTIONSID= ");
@@ -139,7 +139,7 @@ public class InqueriesBean implements Serializable {
 
 			}
 
-			this.answers = (ArrayList<Answers>) em.createQuery(query.toString()).getResultList();
+			this.answers = (ArrayList<Answers>) em.createNativeQuery(query.toString()).getResultList();
 
 			return "success";
 		}
@@ -169,7 +169,7 @@ public class InqueriesBean implements Serializable {
 		em.persist(question);
 
 		this.question = (Questions) em
-				.createQuery("SELECT * FROM (SELECT * FROM QUESTIONS WHEN INQUERYID= '" + this.inquery.getInqueryId());
+				.createNativeQuery("SELECT * FROM (SELECT * FROM QUESTIONS WHEN INQUERYID= '" + this.inquery.getInqueryId());
 
 		registerAnswers(this.answers);
 		utx.commit();
@@ -182,7 +182,7 @@ public class InqueriesBean implements Serializable {
 		utx.begin();
 		em.persist(question);
 		this.question = (Questions) em
-				.createQuery("SELECT * FROM QUESTIONS WHEN INQUERYID= " + this.inquery.getInqueryId());
+				.createNativeQuery("SELECT * FROM QUESTIONS WHEN INQUERYID= " + this.inquery.getInqueryId());
 		registerAnswers(this.answers);
 		utx.commit();
 		return "success";
