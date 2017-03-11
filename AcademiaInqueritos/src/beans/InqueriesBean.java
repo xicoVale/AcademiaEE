@@ -41,7 +41,7 @@ public class InqueriesBean implements Serializable {
 	 * Default constructor.
 	 */
 	public InqueriesBean() {
-		for (int i = 0; i < 4; i++) {
+		for(int i = 0; i < 4; i++) {
 			answers.add(new Answers());
 		}
 	}
@@ -92,10 +92,8 @@ public class InqueriesBean implements Serializable {
 		} else {
 			utx.begin();
 			em.persist(inquery);
-			utx.commit();
-			this.inquery = (Inqueries) em.createNativeQuery(
-					"SELECT * FROM (SELECT * FROM Inqueries WHEN USER_USERNAME= '" + inquery.getUser().getUserName()
-							+ "' AND TITLE= '" + inquery.getTitle() + "') AS I WHEN INQUERYID= MAX(INQUERYID) ");
+			em.flush();
+			
 			registerQuestion(this.question);
 
 			return "success";
@@ -109,10 +107,7 @@ public class InqueriesBean implements Serializable {
 		} else {
 			utx.begin();
 			em.persist(inquery);
-			utx.commit();
-			this.inquery = (Inqueries) em.createNativeQuery(
-					"SELECT * FROM (SELECT * FROM Inqueries WHEN USER_USERNAME= '" + inquery.getUser().getUserName()
-							+ "' AND TITLE= '" + inquery.getTitle() + "') AS I WHEN INQUERYID= MAX(INQUERYID) ");
+			em.flush();
 			registerQuestion(this.question);
 
 			return "success";
@@ -125,16 +120,16 @@ public class InqueriesBean implements Serializable {
 			return "inqueryNotExist";
 		} else {
 
-			this.questionArray = (ArrayList<Questions>) em.createNativeQuery("SELECT * FROM Questions WHEN INQUERY_INQUERYID= '" + inquery.getInqueryId() + "'").getResultList();
+			this.questionArray = (ArrayList<Questions>) em.createNativeQuery("SELECT * FROM Questions WHERE INQUERY_INQUERYID= '" + inquery.getInqueryId() + "'").getResultList();
 
 			StringBuilder query = new StringBuilder();
-			query.append("SELECT * FROM Answers WHEN QUESTIONS_QUESTIONSID= ");
+			query.append("SELECT * FROM Answers WHERE QUESTIONS_QUESTIONSID = ");
 
 			for (Questions ques : questionArray) {
 				if (questionArray.iterator().hasNext()) {
 					query.append(ques.getQuestionId());
 				} else {
-					query.append(ques.getQuestionId() + "OR QUESTIONS_QUESTIONSID= ");
+					query.append(ques.getQuestionId() + "OR QUESTIONS_QUESTIONSID = ");
 				}
 
 			}
@@ -165,29 +160,21 @@ public class InqueriesBean implements Serializable {
 
 	public String registerQuestion(Questions question) throws Exception {
 		question.setInquery(this.inquery);
-		utx.begin();
 		em.persist(question);
-
-		this.question = (Questions) em
-				.createNativeQuery("SELECT * FROM (SELECT * FROM QUESTIONS WHEN INQUERYID= '" + this.inquery.getInqueryId());
-
+		em.flush();	
 		registerAnswers(this.answers);
-		utx.commit();
 		return "success";
 
 	}
 
 	public String registerQuestionNext(Questions question) throws Exception {
-		question.setQuestionId(this.inquery.getInqueryId());
-		utx.begin();
+		question.setQuestionId(this.inquery.getInqueryId());;
 		em.persist(question);
-		this.question = (Questions) em
-				.createNativeQuery("SELECT * FROM QUESTIONS WHEN INQUERYID= " + this.inquery.getInqueryId());
+		em.flush();
 		registerAnswers(this.answers);
-		utx.commit();
 		return "success";
-
 	}
+
 
 	public Questions getQuestion() {
 		return question;
@@ -200,12 +187,9 @@ public class InqueriesBean implements Serializable {
 	// ANSWERS
 
 	public String registerAnswers(ArrayList<Answers> answers) throws Exception {
-		int questionId = this.question.getQuestionId();
-		
-		utx.begin();
-		for (int i = 0; i < answers.size(); i++) {
-			answers.get(i).setAnswerId(questionId);
-			em.persist(answers.get(i));
+		for(Answers answer: answers) {
+			answer.setQuestions(question);
+			em.persist(answer);
 		}
 		utx.commit();
 		
