@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.annotation.ManagedBean;
 import javax.annotation.Resource;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.NotSupportedException;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import entities.Answers;
@@ -28,7 +30,7 @@ public class InqueriesBean implements Serializable {
 	private EntityManager em;
 	@Resource
 	private UserTransaction utx;
-
+	
 	private Inqueries inquery = new Inqueries();
 	private Questions question = new Questions();
 	private ArrayList<Answers> answers = new ArrayList<Answers>();
@@ -40,7 +42,7 @@ public class InqueriesBean implements Serializable {
 	public InqueriesBean() {
 
 	}
-
+	
 	private Boolean verifySameNameAndSameDate(Inqueries inquery) {
 		ArrayList<Inqueries> inqueries = (ArrayList<Inqueries>) em.createNamedQuery(inquery.getTitle(), Inqueries.class)
 				.getResultList();
@@ -142,7 +144,7 @@ public class InqueriesBean implements Serializable {
 	}
 
 	public Inqueries getInquery() {
-		return inquery;
+		return this.inquery;
 	}
 
 	public void setInquery(Inqueries inquery) {
@@ -152,26 +154,26 @@ public class InqueriesBean implements Serializable {
 	// QUESTIONS
 
 	public String registerQuestion(Questions question) throws Exception {
-		question.setInquery(inquery);
+		question.setInquery(this.inquery);
 		utx.begin();
 		em.persist(question);
 
 		this.question = (Questions) em
-				.createNamedQuery("SELECT * FROM (SELECT * FROM QUESTIONS WHEN INQUERYID= '" + inquery.getInqueryId());
+				.createNamedQuery("SELECT * FROM (SELECT * FROM QUESTIONS WHEN INQUERYID= '" + this.inquery.getInqueryId());
 
-		registerAnswers(answers);
+		registerAnswers(this.answers);
 		utx.commit();
 		return "success";
 
 	}
 
 	public String registerQuestionNext(Questions question) throws Exception {
-		question.setQuestionId(inquery.getInqueryId());
+		question.setQuestionId(this.inquery.getInqueryId());
 		utx.begin();
 		em.persist(question);
 		this.question = (Questions) em
-				.createNamedQuery("SELECT * FROM QUESTIONS WHEN INQUERYID= " + inquery.getInqueryId());
-		registerAnswers(answers);
+				.createNamedQuery("SELECT * FROM QUESTIONS WHEN INQUERYID= " + this.inquery.getInqueryId());
+		registerAnswers(this.answers);
 		utx.commit();
 		return "success";
 
@@ -187,16 +189,17 @@ public class InqueriesBean implements Serializable {
 
 	// ANSWERS
 
-	public String registerAnswers(ArrayList<Answers> answers) {
-		int numberQuestion = question.getQuestionId();
-
-		for (int i = 0; i > answers.size(); i++) {
+	public String registerAnswers(ArrayList<Answers> answers) throws Exception {
+		int numberQuestion = this.question.getQuestionId();
+		
+		utx.begin();
+		for (int i = 0; i < answers.size(); i++) {
 			answers.get(i).setAnswerId(numberQuestion);
 			em.persist(answers.get(i));
-
 		}
+		utx.commit();
+		
 		return "success";
-
 	}
 
 	public ArrayList<Answers> getAnswers() {

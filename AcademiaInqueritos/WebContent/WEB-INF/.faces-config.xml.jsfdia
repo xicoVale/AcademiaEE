@@ -23,7 +23,10 @@
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#welcome.xhtml" PATH="/welcome.xhtml"
-  SHAPE="256,33,0,0" model-entity="JSFProcessGroup"/>
+  SHAPE="256,33,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#welcome.xhtml:0" NAME="item"
+   PATH="/welcome.xhtml" model-entity="JSFProcessItem"/>
+ </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#inqueryNew.html" PATH="/inqueryNew.html"
   SHAPE="32,225,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#inqueryNew.html:0" NAME="item"

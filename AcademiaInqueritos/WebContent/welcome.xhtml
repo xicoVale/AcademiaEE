@@ -9,7 +9,11 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
-		<h:outputLabel value="Welcome #{loginBean.name}."></h:outputLabel>
+		<h:head>
+			<h:outputStylesheet library="css" name="styles.css" />
+		</h:head>
+		
+		<h:outputLabel value="Welcome #{userBean.user.userName}."></h:outputLabel>
 		<p />
 	   Please select an inquery:
 	   	<p />
@@ -20,15 +24,42 @@
 				<h:outputText id="expDate" value="Expiration date"></h:outputText>
 
 				<h:panelGroup style="display:block; text-align:left">
-					<h:selectOneRadio id="inquery" value="#{inqueriesbean.inqueries}" label="Inquery" layout="pageDirection">
-						<f:selectItem value="#{inqueriesbean.userAnswer}"/>
+					<h:selectOneRadio id="inquery" value="#{inqueriesBean.inqueries}"
+						label="Inquery" layout="pageDirection"
+						rendered="#{not empty inqueriesBean.inqueries}">
+						<f:selectItem value="#{inqueriesBean.userAnswer}" />
 					</h:selectOneRadio>
 				</h:panelGroup>
 			</h:panelGrid>
 			<p />
 			<h:commandButton value="Start" action="inqueryStart"></h:commandButton>
-			<h:commandButton value="Stats" action="stats"></h:commandButton>
+			<p />
 		</h:form>
+
+		<h:link value="Stats" styleClass="button" outcome="statsSelect" 
+			rendered="#{(userBean.user.userRole.roleId eq 1) or (userBean.user.userRole.roleId eq 2)}"/>
+			
+		<h:link value="New" styleClass="button" outcome="inqueryNew" 
+			rendered="#{(userBean.user.userRole.roleId eq 1) or (userBean.user.userRole.roleId eq 2)}"/>
+		
+		<h:link value="Edit" styleClass="button" outcome="inqueryEdit" 
+			rendered="#{(userBean.user.userRole.roleId eq 1) or (userBean.user.userRole.roleId eq 2)}"/>
+		<p/>
+		<h:link value="Backup" styleClass="button" outcome="backups" 
+			rendered="#{userBean.user.userRole.roleId eq 1}"/>
+		<p />
+		<p />
+		<h:outputText value="User to promote:"
+			rendered="#{(userBean.user.userRole.roleId eq 1)}"></h:outputText>
+		<br />
+		<h:inputText id="promote" value="#{userBean.user.userName}"
+			label="Promote" required="true"
+			requiredMessage="Please enter a user name."
+			rendered="#{(userBean.user.userRole.roleId eq 1)}"></h:inputText>
+		<h:message for="name" errorClass="errorMessage" />
+		<h:commandButton value="Promote" action="___________"
+			rendered="#{(userBean.user.userRole.roleId eq 1)}"></h:commandButton>
+
 	</ui:define>
 </ui:composition>
 </html>
