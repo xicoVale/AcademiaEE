@@ -12,9 +12,11 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 
 /**
@@ -23,12 +25,13 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name="Inqueries")
+@TableGenerator(name="seq", table="SEQUENCE", pkColumnName = "SEQ_NAME", valueColumnName="SEQ_COUNT", allocationSize=100)
 public class Inqueries implements Serializable {
 
 	
 	@Id
 	@Column(updatable = false)
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seq")
 	private Integer inqueryId;
 	@Basic(optional = false)
 	private String title;
