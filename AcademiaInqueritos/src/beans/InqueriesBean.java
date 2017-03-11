@@ -138,11 +138,15 @@ public class InqueriesBean implements Serializable {
 			return "inqueryNotExist";
 		} else {
 
+<<<<<<< Upstream, based on origin/faces
 			List<Object[]> questions = em.createNativeQuery("SELECT * FROM Questions WHERE INQUERY_INQUERYID= '" + inquery.getInqueryId() + "'").getResultList();
 			
 			for(Object[] question: questions) {
 				questionArray.add(Questions.parseQuestion(question, em));
 			}
+=======
+			this.questionArray = (ArrayList<Questions>) em.createNativeQuery("SELECT * FROM Questions WHERE INQUERY_INQUERYID= '" + inquery.getInqueryId() + "'").getResultList();
+>>>>>>> d6e7a94 Fixed bugs preventing inqueries being added to the database.
 
 			StringBuilder query = new StringBuilder();
 			query.append("SELECT * FROM Answers WHERE QUESTIONS_QUESTIONSID = ");
@@ -211,6 +215,7 @@ public class InqueriesBean implements Serializable {
 		registerAnswers(this.answers);
 		return "success";
 	}
+
 
 	
 	public Questions getQuestion() {
