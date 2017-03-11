@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
@@ -15,6 +16,7 @@ import javax.transaction.UserTransaction;
 import entities.Answers;
 import entities.Inqueries;
 import entities.Questions;
+import entities.Users;
 
 /**
  * Session Bean implementation class InqueriesBean
@@ -46,14 +48,20 @@ public class InqueriesBean implements Serializable {
 		}
 	}
 	
+	/**
+	 * Searches the database for another inquiry with the same title and that is active at the same time.
+	 * 
+	 * @param inquery
+	 * @return - false if no other inquiries exist or true otherwise
+	 */
 	private Boolean verifySameNameAndSameDate(Inqueries inquery) {
-		ArrayList<Inqueries> inqueries = (ArrayList<Inqueries>) em.createNativeQuery("SELECT * FROM Inqueries WHERE TITLE LIKE '" + inquery.getTitle() + "'").getResultList();
-
+		List<Object[]> inqueries = em.createNativeQuery("SELECT * FROM Inqueries WHERE TITLE LIKE '" + inquery.getTitle() + "'").getResultList();
 		if (inqueries.isEmpty()) {
 			return false;
 		} else {
-			for (Inqueries inq : inqueries) {
-
+			for (int i = 0; i < inqueries.size(); i++) {
+				Inqueries inq = Inqueries.parseInquery(inqueries.get(i), em);
+				
 				if (this.inquery.getTitle().equals(inq.getTitle())) {
 
 					Date dateEndA = inquery.getEndDate();
@@ -72,7 +80,6 @@ public class InqueriesBean implements Serializable {
 
 					} else if (dateStartA.compareTo(dateStartB) <= 0 && dateEndA.compareTo(dateEndB) >= 0) {
 						return true;
-
 					}
 
 				} else {
@@ -80,11 +87,16 @@ public class InqueriesBean implements Serializable {
 				}
 			}
 			return false;
-
 		}
-
 	}
 
+	/**
+	 * Starts the process of adding an inquiry to the database
+	 * 
+	 * @param inquery
+	 * @return
+	 * @throws Exception
+	 */
 	public String registerInqueryNext(Inqueries inquery) throws Exception {
 		if (verifySameNameAndSameDate(inquery)) {
 			return "sameNameAndCoincidenceDates";
@@ -100,6 +112,12 @@ public class InqueriesBean implements Serializable {
 		}
 	}
 
+	/** Starts the process of adding an inquiry to the database
+	 * 
+	 * @param inquery
+	 * @return
+	 * @throws Exception
+	 */
 	public String registerInquery(Inqueries inquery) throws Exception {
 		if (verifySameNameAndSameDate(inquery)) {
 			return "sameNameAndCoincidenceDates";
@@ -120,7 +138,11 @@ public class InqueriesBean implements Serializable {
 			return "inqueryNotExist";
 		} else {
 
-			this.questionArray = (ArrayList<Questions>) em.createNativeQuery("SELECT * FROM Questions WHERE INQUERY_INQUERYID= '" + inquery.getInqueryId() + "'").getResultList();
+			List<Object[]> questions = em.createNativeQuery("SELECT * FROM Questions WHERE INQUERY_INQUERYID= '" + inquery.getInqueryId() + "'").getResultList();
+			
+			for(Object[] question: questions) {
+				questionArray.add(Questions.parseQuestion(question, em));
+			}
 
 			StringBuilder query = new StringBuilder();
 			query.append("SELECT * FROM Answers WHERE QUESTIONS_QUESTIONSID = ");
@@ -134,7 +156,10 @@ public class InqueriesBean implements Serializable {
 
 			}
 
-			this.answers = (ArrayList<Answers>) em.createNativeQuery(query.toString()).getResultList();
+			List<Object[]> answers = em.createNativeQuery(query.toString()).getResultList();
+			for(Object[] answer: answers) {
+				this.answers.add(Answers.parseAnswer(answer, em));
+			}
 
 			return "success";
 		}
@@ -157,7 +182,13 @@ public class InqueriesBean implements Serializable {
 	}
 
 	// QUESTIONS
-
+	/**
+	 * Adds a question to the database
+	 * 
+	 * @param question
+	 * @return
+	 * @throws Exception
+	 */
 	public String registerQuestion(Questions question) throws Exception {
 		question.setInquery(this.inquery);
 		em.persist(question);
@@ -166,7 +197,13 @@ public class InqueriesBean implements Serializable {
 		return "success";
 
 	}
-
+	/**
+	 * Adds a question to the database
+	 * 
+	 * @param question
+	 * @return
+	 * @throws Exception
+	 */
 	public String registerQuestionNext(Questions question) throws Exception {
 		question.setQuestionId(this.inquery.getInqueryId());;
 		em.persist(question);
@@ -175,7 +212,7 @@ public class InqueriesBean implements Serializable {
 		return "success";
 	}
 
-
+	
 	public Questions getQuestion() {
 		return question;
 	}
@@ -185,7 +222,13 @@ public class InqueriesBean implements Serializable {
 	}
 
 	// ANSWERS
-
+	/**
+	 * Adds a question's answers to the database
+	 * 
+	 * @param answers
+	 * @return
+	 * @throws Exception
+	 */
 	public String registerAnswers(ArrayList<Answers> answers) throws Exception {
 		for(Answers answer: answers) {
 			answer.setQuestions(question);
