@@ -19,56 +19,62 @@
 			<h:form>
 			<h1>#{msgs.enterInqueriesBean}</h1>
 			<h:panelGrid columns="1">
+			
 			<h:outputLabel value="Inquery title:"></h:outputLabel>
 			#{msgs.title}
-			<h:inputText id="title" value="#{inqueriesBean.inquery.title}" label="Title"
+			<h:inputText id="title" value="#{inqueriesBean.inquery.title}"
 						required="true" requiredMessage="Please enter a title."></h:inputText>
-					<h:message for="Title" styleClass="errorMessage" /><p/>					
+					<h:message for="title" errorClass="errorMessage" /><p/>					
 
 			<h:outputLabel value="Start date:"></h:outputLabel>
 			#{msgs.startDate}   
-			<h:inputText id="startDate" value="#{inqueriesBean.inquery.startDate}" label="Start Date"
+			<h:inputText id="startDate" value="#{inqueriesBean.inquery.startDate}" label="Info"
 						required="true" requiredMessage="Please enter a start date [hh:mm; dd-mm-yyyy].">
 						<f:convertDateTime pattern="hh:mm; dd-mm-yyyy" />
 					</h:inputText>
-					<h:message for="Start Date" styleClass="errorMessage" /><p/>	
+					<h:message for="startDate" errorClass="errorMessage" /><p/>	
 
 
 			<h:outputLabel value="End date:"></h:outputLabel>
 			#{msgs.endDate}
-			<h:inputText id="endDate" value="#{inqueriesBean.inquery.endDate}" label="End Date"
+			<h:inputText id="endDate" value="#{inqueriesBean.inquery.endDate}"  label="Info"
 						required="true" requiredMessage="Please enter an end date [hh:mm; dd-mm-yyyy].">
 						<f:convertDateTime pattern="hh:mm; dd-mm-yyyy" />
 					</h:inputText>
-					<h:message for="End Date" styleClass="errorMessage" /><p/>	
+					<h:message for="endDate" styleClass="errorMessage" /><p/>	
 
 
 			<h:outputLabel value="Question:"></h:outputLabel>
 			#{msgs.questionText}
-			<h:inputText id="question" value="#{inqueriesBean.question.questionText}" label="Question"
-						required="true" requiredMessage="Please enter a question."></h:inputText>
-					<h:message for="Question" styleClass="errorMessage" /><p/>	
+			<h:inputText id="question" value="#{inqueriesBean.question.questionText}" required="true"
+							requiredMessage="Please enter a question."></h:inputText>
+					<h:message for="question" styleClass="errorMessage" /><p/>	
 					
 
 			<h:outputLabel value="Answer: "></h:outputLabel>
 				#{msgs.answerText}
-					<h:inputText id="answer1" value="#{inqueriesBean.answers[0].answerText}" label="Answer1" required="true" requiredMessage="Please enter an answer."></h:inputText>
-					<h:message for="Answer1" styleClass="errorMessage" />
-					<h:outputText value=" "></h:outputText>
-					<h:inputText id="answer2" value="#{inqueriesBean.answers[1].answerText}" label="Answer2" required="true" requiredMessage="Please enter an answer."></h:inputText>
-					<h:message for="Answer2" styleClass="errorMessage" />
-					<h:inputText id="answer3" value="#{inqueriesBean.answers[2].answerText}" label="Answer3" required="true" requiredMessage="Please enter an answer."></h:inputText>
-					<h:message for="Answer3" styleClass="errorMessage" />
-					<h:outputText value=" "></h:outputText>
-					<h:inputText id="answer4" value="#{inqueriesBean.answers[3].answerText}" label="Answer4" required="true" requiredMessage="Please enter an answer."></h:inputText>
-					<h:message for="Answer4" styleClass="errorMessage" />
+					<h:inputText id="answer1" value="#{inqueriesBean.answers[0].answerText}" required="true"
+									requiredMessage="Please enter an answer."></h:inputText>
+					<h:message for="answer1" styleClass="errorMessage" />
+					
+					<h:inputText id="answer2" value="#{inqueriesBean.answers[1].answerText}" required="true"
+									requiredMessage="Please enter an answer."></h:inputText>
+									<h:message for="answer2" styleClass="errorMessage" />
+									
+					<h:inputText id="answer3" value="#{inqueriesBean.answers[2].answerText}" required="true"
+									requiredMessage="Please enter an answer."></h:inputText>
+									<h:message for="answer3" styleClass="errorMessage" />
+									
+					<h:inputText id="answer4" value="#{inqueriesBean.answers[3].answerText}" required="true"
+									requiredMessage="Please enter an answer."></h:inputText>
+									<h:message for="answer4" styleClass="errorMessage" />
 			</h:panelGrid>
 		<p/>
 		<h:commandButton value="Next" action="#{inqueriesBean.registerInqueryNext(inqueriesBean.inquery)}"></h:commandButton>
 		<h:commandButton value="Finish" action="#{inqueriesBean.registerInquery(inqueriesBean.inquery)}"></h:commandButton>
 		<p/>
-		<h:link value="Back" styleClass="button" outcome="welcome"/>
 	</h:form>
+		<h:link value="Back" styleClass="button" outcome="welcome"/>
 	</ui:define>
 </ui:composition>
 </html>

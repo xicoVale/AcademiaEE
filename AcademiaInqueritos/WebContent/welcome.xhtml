@@ -36,8 +36,7 @@
 			<p />
 		</h:form>
 
-		<h:link value="Stats" styleClass="button" outcome="statsSelect" 
-			rendered="#{(userBean.user.userRole.roleId eq 1) or (userBean.user.userRole.roleId eq 2)}"/>
+		<h:link value="Stats" styleClass="button" outcome="statsSelect"/>
 			
 		<h:link value="New" styleClass="button" outcome="inqueryNew" 
 			rendered="#{(userBean.user.userRole.roleId eq 1) or (userBean.user.userRole.roleId eq 2)}"/>
@@ -45,8 +44,7 @@
 		<h:link value="Edit" styleClass="button" outcome="inqueryEdit" 
 			rendered="#{(userBean.user.userRole.roleId eq 1) or (userBean.user.userRole.roleId eq 2)}"/>
 		<p/>
-		<h:link value="Backup" styleClass="button" outcome="backups" 
-			rendered="#{userBean.user.userRole.roleId eq 1}"/>
+		<h:link value="Backup" styleClass="button" outcome="backups" rendered="#{userBean.user.userRole.roleId eq 1}"/>
 		<p />
 		<p />
 		<h:outputText value="User to promote:"

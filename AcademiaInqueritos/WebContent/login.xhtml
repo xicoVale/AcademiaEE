@@ -31,7 +31,7 @@
             <h:inputSecret id="password" value="#{userBean.user.password}" label="Password"
             			  required="true" requiredMessage="Please enter a password.">
 					<f:validateLength minimum="6" /></h:inputSecret>
-			<h:message for="password" styleClass="errorMessage" />
+			<h:message for="password" errorClass="errorMessage" />
 			</h:panelGrid>
 			
 			<br />
@@ -39,8 +39,6 @@
 			<h:commandButton value="Register" action="#{userBean.registerUser(userBean.user)}"></h:commandButton>
 		</h:form>
 
-		<!-- falta validar o botão login: user, suepruser ou admin -->
-		
 	</ui:define>
 </ui:composition>
 </html>

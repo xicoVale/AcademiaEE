@@ -16,28 +16,34 @@
 		</h:head>
 		
 		<h:form>
-			<h1>#{msgs.enterQueryBean}</h1>
-			<h:panelGrid columns="4">
-
-			<h:outputText value="Backup in: "></h:outputText>
-			  #{msgs.name}
-            <h:inputText id="backup" value="#{userBean.user.userName}" label="backup" 
-            			 required="true" requiredMessage="Please enter a user name."></h:inputText>
-			<h:message for="backup" errorClass="errorMessage" />
-
-
-			<h:outputText value="Recurrent backup in: "></h:outputText>
-			  #{msgs.password}
-            <h:inputSecret id="password"
-            			   value="#{userBean.user.password}"
-            			   required="true" requiredMessage="Please enter a password.">
-					<f:validateLength minimum="6" /></h:inputSecret>
-			<h:message for="password" errorClass="errorMessage" />
+			<h1>#{msgs.enterInqueriesBean}</h1>
+			
+			<h:panelGrid columns="2">
+			
+			<h:outputLabel value="Backup date:"></h:outputLabel>
+			#{msgs.backupDate}   
+			<h:inputText id="backup" value="#{backupBean.backup}" label="Info"
+						required="true" requiredMessage="Please enter a date [hh:mm; dd-mm-yyyy].">
+						<f:convertDateTime pattern="hh:mm; dd-mm-yyyy" />
+					</h:inputText>
+					<h:message for="backup" errorClass="errorMessage" />
+			<h:commandButton value="Set" action="welcome"/>
+			<p/>
+			
+			<h:outputLabel value="Recurrent backup date: "></h:outputLabel>
+			#{msgs.backupRecurrentDate}   
+           <h:inputText id="backupRec" value="#{backupBean.backup}" label="Info"
+						required="true" requiredMessage="Please enter a date [hh:mm; dd-mm-yyyy].">
+						<f:convertDateTime pattern="hh:mm; dd-mm-yyyy" />
+					</h:inputText>
+					<h:message for="backupRec" errorClass="errorMessage" />
+			<h:commandButton value="Set" action="welcome"/>
+			<p/>
+					
 			</h:panelGrid>
 			<br />
-			<h:commandButton value="Back" action="welcome"></h:commandButton>
-			<h:commandButton value="Save" action="#{__________)}"></h:commandButton>
 		</h:form>
+			<h:link value="Back" styleClass="button" outcome="welcome"/>
 	</ui:define>
 
 </ui:composition>

@@ -16,22 +16,21 @@
 		</h:head>
 		<h:body>
 			<h:form>
-				<div><h1>#{msgs.enterInqueriesBean}</h1>
-					<h:panelGrid columns="4">
+				<h1>#{msgs.enterInqueriesBean}</h1>
+				<h:panelGrid columns="1">
 
-							<h:outputText value="Question:"></h:outputText>
+			<h:outputLabel value="Question:"></h:outputLabel>
 			#{msgs.questionText}
-				<h:inputText id="question"
-								value="#{inqueriesBean.question.questionText}" required="true"
+			<h:inputText id="question" value="#{inqueriesBean.question.questionText}" required="true"
 								requiredMessage="Please enter a question."></h:inputText>
-							<h:message for="question" styleClass="errorMessage" />
+							<h:message for="question" styleClass="errorMessage" /><p/>	
 
-							<h:outputText value="Answers: "></h:outputText>
+							<h:outputLabel value="Answers: "></h:outputLabel>
 			#{msgs.answerText}
 					<h:inputText id="answer1"
-								value="#{inqueriesBean.answers[0].answerText}" label="Answer1"
+								value="#{inqueriesBean.answers[0].answerText}"
 								required="true" requiredMessage="Please enter an answer."></h:inputText>
-							<h:message for="Answer1" styleClass="errorMessage" />
+							<h:message for="answer1" styleClass="errorMessage" />
 
 							<h:inputText id="answer2"
 								value="#{inqueriesBean.answers[1].answerText}" label="Answer2"
@@ -47,28 +46,30 @@
 								value="#{inqueriesBean.answers[3].answerText}" label="Answer4"
 								required="true" requiredMessage="Please enter an answer."></h:inputText>
 							<h:message for="Answer4" styleClass="errorMessage" />
-					</h:panelGrid>
-				</div>
+				</h:panelGrid>
+					<h:commandButton value="Next" action="#{inqueriesBean.registerQuestionNext(inqueriesBean.inquery)}"></h:commandButton>
+					<h:commandButton value="Finish" action="#{inqueriesBean.registerQuestion(inqueriesBean.inquery)}"></h:commandButton>
+				<p/>
+					<h:link value="Back" styleClass="button" outcome="welcome"/>
+				<p/>
+				<p/>
+				<p/>
 
-				<h:commandButton value="Back" action="welcome"></h:commandButton>
-				<h:commandButton value="Next"
-					action="#{inqueryBean.registerQuestionNext(inqueryBean.inquery)}"></h:commandButton>
-				<h:commandButton value="Finish"
-					action="#{inqueryBean.registerQuestion(inqueryBean.inquery)}"></h:commandButton>
-
-
-				<div><h:outputText value="#{inqueriesBean.inquery.title}"></h:outputText>
-					 <h:outputText value="#{inqueriesBean.inquery.startDate}"></h:outputText>
-					 <h:outputText value="#{inqueriesBean.inquery.endDate}"></h:outputText>
-					 <h:outputText value="#{inqueriesBean.question.questionText}"></h:outputText>
-					 <h:outputText value="#{inqueriesBean.answers[0].answerText}"></h:outputText>
-					 <h:outputText value="#{inqueriesBean.answers[1].answerText}"></h:outputText>
-					 <h:outputText value="#{inqueriesBean.answers[2].answerText}"></h:outputText>
-					 <h:outputText value="#{inqueriesBean.answers[3].answerText}"></h:outputText>
+				<div>
+					 <h:outputText value="#{inqueriesBean.inquery.title}"></h:outputText><p/>
+					 <h:outputText value="#{inqueriesBean.inquery.startDate}"></h:outputText><br/>
+					 <h:outputText value="#{inqueriesBean.inquery.endDate}"></h:outputText><p/>
+					 
+					 <ui:repeat value="#{___________}">
+  						  <div>content</div></ui:repeat>
+					 <h:outputText value="#{inqueriesBean.question.questionText}"></h:outputText><p/>
+					 <h:outputText value="#{inqueriesBean.answers[0].answerText}"></h:outputText><br/>
+					 <h:outputText value="#{inqueriesBean.answers[1].answerText}"></h:outputText><br/>
+					 <h:outputText value="#{inqueriesBean.answers[2].answerText}"></h:outputText><br/>
+					 <h:outputText value="#{inqueriesBean.answers[3].answerText}"></h:outputText><p/>
 				</div>
 				
-					<h:commandButton value="Edit" action="inqueryEdit"></h:commandButton>
-
+					<h:link value="Edit" styleClass="button" outcome="inqueryEdit"/>
 			</h:form>
 		</h:body>
 	</ui:define>
