@@ -29,22 +29,22 @@
 							<h:outputText value="Answers: "></h:outputText>
 			#{msgs.answerText}
 					<h:inputText id="answer1"
-								value="#{inqueriesBean.answer.answerText[0]}" label="Answer1"
+								value="#{inqueriesBean.answers[0].answerText}" label="Answer1"
 								required="true" requiredMessage="Please enter an answer."></h:inputText>
 							<h:message for="Answer1" styleClass="errorMessage" />
 
 							<h:inputText id="answer2"
-								value="#{inqueriesBean.answer.answerText[1]}" label="Answer2"
+								value="#{inqueriesBean.answers[1].answerText}" label="Answer2"
 								required="true" requiredMessage="Please enter an answer."></h:inputText>
 							<h:message for="Answer2" styleClass="errorMessage" />
 
 							<h:inputText id="answer3"
-								value="#{inqueriesBean.answer.answerText[2]}" label="Answer3"
+								value="#{inqueriesBean.answers[2].answerText}" label="Answer3"
 								required="true" requiredMessage="Please enter an answer."></h:inputText>
 							<h:message for="Answer3" styleClass="errorMessage" />
 
 							<h:inputText id="answer4"
-								value="#{inqueriesBean.answer.answerText[3]}" label="Answer4"
+								value="#{inqueriesBean.answers[3].answerText}" label="Answer4"
 								required="true" requiredMessage="Please enter an answer."></h:inputText>
 							<h:message for="Answer4" styleClass="errorMessage" />
 					</h:panelGrid>
@@ -61,10 +61,10 @@
 					 <h:outputText value="#{inqueriesBean.inquery.startDate}"></h:outputText>
 					 <h:outputText value="#{inqueriesBean.inquery.endDate}"></h:outputText>
 					 <h:outputText value="#{inqueriesBean.question.questionText}"></h:outputText>
-					 <h:outputText value="#{inqueriesBean.answer.answerText[0]}"></h:outputText>
-					 <h:outputText value="#{inqueriesBean.answer.answerText[1]}"></h:outputText>
-					 <h:outputText value="#{inqueriesBean.answer.answerText[2]}"></h:outputText>
-					 <h:outputText value="#{inqueriesBean.answer.answerText[3]}"></h:outputText>
+					 <h:outputText value="#{inqueriesBean.answers[0].answerText}"></h:outputText>
+					 <h:outputText value="#{inqueriesBean.answers[1].answerText}"></h:outputText>
+					 <h:outputText value="#{inqueriesBean.answers[2].answerText}"></h:outputText>
+					 <h:outputText value="#{inqueriesBean.answers[3].answerText}"></h:outputText>
 				</div>
 				
 					<h:commandButton value="Edit" action="inqueryEdit"></h:commandButton>

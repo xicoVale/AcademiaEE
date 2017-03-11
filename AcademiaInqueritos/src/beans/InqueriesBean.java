@@ -2,6 +2,7 @@ package beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.annotation.Resource;
@@ -9,8 +10,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.NotSupportedException;
-import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 import entities.Answers;
@@ -35,12 +34,16 @@ public class InqueriesBean implements Serializable {
 	private Questions question = new Questions();
 	private ArrayList<Answers> answers = new ArrayList<Answers>();
 	private ArrayList<Questions> questionArray = new ArrayList<Questions>();
-
+	private ArrayList<Inqueries> inqueries = new ArrayList<Inqueries>();
+	
+	
 	/**
 	 * Default constructor.
 	 */
 	public InqueriesBean() {
-
+		for (int i = 0; i < 4; i++) {
+			answers.add(new Answers());
+		}
 	}
 	
 	private Boolean verifySameNameAndSameDate(Inqueries inquery) {
@@ -150,6 +153,14 @@ public class InqueriesBean implements Serializable {
 	public void setInquery(Inqueries inquery) {
 		this.inquery = inquery;
 	}
+	
+	public ArrayList<Inqueries> getInqueries() {
+		return this.inqueries;
+	}
+
+	public void setInqueries(ArrayList<Inqueries> inqueries) {
+		this.inqueries = inqueries;
+	}
 
 	// QUESTIONS
 
@@ -190,11 +201,11 @@ public class InqueriesBean implements Serializable {
 	// ANSWERS
 
 	public String registerAnswers(ArrayList<Answers> answers) throws Exception {
-		int numberQuestion = this.question.getQuestionId();
+		int questionId = this.question.getQuestionId();
 		
 		utx.begin();
 		for (int i = 0; i < answers.size(); i++) {
-			answers.get(i).setAnswerId(numberQuestion);
+			answers.get(i).setAnswerId(questionId);
 			em.persist(answers.get(i));
 		}
 		utx.commit();
