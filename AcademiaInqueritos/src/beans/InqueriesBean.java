@@ -137,13 +137,11 @@ public class InqueriesBean implements Serializable {
 		if (this.inquery == null) {
 			return "inqueryNotExist";
 		} else {
-			
 			List<Object[]> questions = em.createNativeQuery("SELECT * FROM Questions WHERE INQUERY_INQUERYID= '" + inquery.getInqueryId() + "'").getResultList();
 			
 			for(Object[] question: questions) {
 				questionArray.add(Questions.parseQuestion(question, em));
-			}			
-
+			}
 			StringBuilder query = new StringBuilder();
 			query.append("SELECT * FROM Answers WHERE QUESTIONS_QUESTIONSID = ");
 
@@ -211,7 +209,7 @@ public class InqueriesBean implements Serializable {
 		registerAnswers(this.answers);
 		return "success";
 	}
-	
+
 	public Questions getQuestion() {
 		return question;
 	}

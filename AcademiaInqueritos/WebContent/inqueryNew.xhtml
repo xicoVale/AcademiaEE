@@ -70,13 +70,8 @@
 									<h:message for="answer4" styleClass="errorMessage" />
 			</h:panelGrid>
 		<p/>
-		
-		<h:commandButton value="Next" action="#{inqueriesBean.registerInqueryNext(inqueriesBean.inquery)}">
-			<f:setPropertyActionListener value="#{userBean.user}" target="#{inqueriesBean.inquery.user}"/>
-		</h:commandButton>
-		<h:commandButton value="Finish" action="#{inqueriesBean.registerInquery(inqueriesBean.inquery)}">
-			<f:setPropertyActionListener value="#{userBean.user}" target="#{inqueriesBean.inquery.user}"/>
-		</h:commandButton>
+		<h:commandButton value="Next" action="#{inqueriesBean.registerInqueryNext(inqueriesBean.inquery)}"></h:commandButton>
+		<h:commandButton value="Finish" action="#{inqueriesBean.registerInquery(inqueriesBean.inquery)}"></h:commandButton>
 		<p/>
 	</h:form>
 		<h:link value="Back" styleClass="button" outcome="welcome"/>
