@@ -29,8 +29,8 @@
 			<h:outputLabel value="Start date:"></h:outputLabel>
 			#{msgs.startDate}   
 			<h:inputText id="startDate" value="#{inqueriesBean.inquery.startDate}" label="Info"
-						required="true" requiredMessage="Please enter a start date [hh:mm; dd-mm-yyyy].">
-						<f:convertDateTime pattern="hh:mm; dd-mm-yyyy" />
+						required="true" requiredMessage="Please enter a start date [dd-mm-yyyy].">
+						<f:convertDateTime pattern="dd-mm-yyyy" />
 					</h:inputText>
 					<h:message for="startDate" errorClass="errorMessage" /><p/>	
 
@@ -38,8 +38,8 @@
 			<h:outputLabel value="End date:"></h:outputLabel>
 			#{msgs.endDate}
 			<h:inputText id="endDate" value="#{inqueriesBean.inquery.endDate}"  label="Info"
-						required="true" requiredMessage="Please enter an end date [hh:mm; dd-mm-yyyy].">
-						<f:convertDateTime pattern="hh:mm; dd-mm-yyyy" />
+						required="true" requiredMessage="Please enter an end date [dd-mm-yyyy].">
+						<f:convertDateTime pattern="dd-mm-yyyy" />
 					</h:inputText>
 					<h:message for="endDate" styleClass="errorMessage" /><p/>	
 
