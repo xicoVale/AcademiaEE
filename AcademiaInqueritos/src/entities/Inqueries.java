@@ -3,6 +3,9 @@ package entities;
 import static javax.persistence.TemporalType.DATE;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Basic;
@@ -65,6 +68,11 @@ public class Inqueries implements Serializable {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
+	
+	public void setStartDate(String startDate) throws ParseException {
+		DateFormat format = new SimpleDateFormat("DD/MM/YYYY");
+		this.startDate = format.parse(startDate);
+	}
 	   
 	public Date getEndDate() {
  		return this.endDate;
@@ -73,8 +81,12 @@ public class Inqueries implements Serializable {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-
 	
+	public void setEndDate(String endDate) throws ParseException {
+		DateFormat format = new SimpleDateFormat("DD/MM/YYYY");
+		this.endDate = format.parse(endDate);
+	}
+
 	public Users getUser() {
 		return user;
 	}
