@@ -6,9 +6,11 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 /**
  * Entity implementation class for Entity: Answers
@@ -16,12 +18,13 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="Answers")
+@TableGenerator(name="seq", table="SEQUENCE", pkColumnName = "SEQ_NAME", valueColumnName="SEQ_COUNT", allocationSize=100)
 public class Answers implements Serializable {
 
 	 
 	@Id
 	@Column(updatable = false, nullable = false)
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seq")
 	private Integer answerId;
 	@Basic(optional = false)
 	private String answerText;
