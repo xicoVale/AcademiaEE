@@ -28,30 +28,18 @@
 
 			<h:outputLabel value="Start date:"></h:outputLabel>
 			#{msgs.startDate}   
-<<<<<<< Upstream, based on origin/faces
 			<h:inputText id="startDate" value="#{inqueriesBean.inquery.startDate}" label="Info"
-						required="true" requiredMessage="Please enter a start date [hh:mm; dd-mm-yyyy].">
-						<f:convertDateTime pattern="hh:mm; dd-mm-yyyy" />
-=======
-			<h:inputText id="startDate" value="#{inqueriesBean.inquery.startDate}" label="Start Date"
 						required="true" requiredMessage="Please enter a start date [dd-mm-yyyy].">
 						<f:convertDateTime pattern="dd-mm-yyyy" />
->>>>>>> 77efe40 Changed date format requirements
 					</h:inputText>
 					<h:message for="startDate" errorClass="errorMessage" /><p/>	
 
 
 			<h:outputLabel value="End date:"></h:outputLabel>
 			#{msgs.endDate}
-<<<<<<< Upstream, based on origin/faces
 			<h:inputText id="endDate" value="#{inqueriesBean.inquery.endDate}"  label="Info"
-						required="true" requiredMessage="Please enter an end date [hh:mm; dd-mm-yyyy].">
-						<f:convertDateTime pattern="hh:mm; dd-mm-yyyy" />
-=======
-			<h:inputText id="endDate" value="#{inqueriesBean.inquery.endDate}" label="End Date"
 						required="true" requiredMessage="Please enter an end date [dd-mm-yyyy].">
 						<f:convertDateTime pattern="dd-mm-yyyy" />
->>>>>>> 77efe40 Changed date format requirements
 					</h:inputText>
 					<h:message for="endDate" styleClass="errorMessage" /><p/>	
 
@@ -82,13 +70,8 @@
 									<h:message for="answer4" styleClass="errorMessage" />
 			</h:panelGrid>
 		<p/>
-		
-		<h:commandButton value="Next" action="#{inqueriesBean.registerInqueryNext(inqueriesBean.inquery)}">
-			<f:setPropertyActionListener value="#{userBean.user}" target="#{inqueriesBean.inquery.user}"/>
-		</h:commandButton>
-		<h:commandButton value="Finish" action="#{inqueriesBean.registerInquery(inqueriesBean.inquery)}">
-			<f:setPropertyActionListener value="#{userBean.user}" target="#{inqueriesBean.inquery.user}"/>
-		</h:commandButton>
+		<h:commandButton value="Next" action="#{inqueriesBean.registerInqueryNext(inqueriesBean.inquery)}"></h:commandButton>
+		<h:commandButton value="Finish" action="#{inqueriesBean.registerInquery(inqueriesBean.inquery)}"></h:commandButton>
 		<p/>
 	</h:form>
 		<h:link value="Back" styleClass="button" outcome="welcome"/>
