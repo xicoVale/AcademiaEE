@@ -25,7 +25,7 @@ public class Stats implements Serializable {
 	private Inqueries inquery = new Inqueries();
 	private ArrayList<Questions> questions = new ArrayList<Questions>();
 	private ArrayList<ArrayList<Answers>> answers = new ArrayList<ArrayList<Answers>>();
-	private ArrayList<UserAnswers> userAnswers = new ArrayList<UserAnswers>();
+	private ArrayList<ArrayList<UserAnswers>> userAnswers = new ArrayList<ArrayList<UserAnswers>>();
 	
 	public Stats() {
 	}
@@ -54,11 +54,11 @@ public class Stats implements Serializable {
 		this.answers = answers;
 	}
 
-	public ArrayList<UserAnswers> getUserAnswers() {
+	public ArrayList<ArrayList<UserAnswers>> getUserAnswers() {
 		return userAnswers;
 	}
 
-	public void setUserAnswers(ArrayList<UserAnswers> userAnswers) {
+	public void setUserAnswers(ArrayList<ArrayList<UserAnswers>> userAnswers) {
 		this.userAnswers = userAnswers;
 	}
 
@@ -78,8 +78,14 @@ public class Stats implements Serializable {
 			else {
 				for (Questions question: getQuestions()) {
 					ArrayList<Answers> answer = (ArrayList<Answers>) em.createNamedQuery("SELECT * FROM Answer WHERE QUESTIONS_QUESTIONID = " + question.getQuestionId());
+					
+					for(Answers userAnswer : answer) {
+						userAnswers.add((ArrayList<UserAnswers>) em.createNamedQuery("SELECT * FROM UserAnswers WHERE ANSWERID = " + userAnswer.getAnswerId()));
+					}
+					
 					this.answers.add(answer);
 				}
+				return "success";
 			}
 		}
 	}
