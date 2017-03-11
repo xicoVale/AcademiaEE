@@ -15,7 +15,7 @@ import entities.UserAnswers;
 
 @ManagedBean
 @RequestScoped
-public class Stats implements Serializable {
+public class StatsBean implements Serializable {
 	
 	private static final long serialVersionUID = -8534995753434191562L;
 
@@ -27,7 +27,7 @@ public class Stats implements Serializable {
 	private ArrayList<ArrayList<Answers>> answers = new ArrayList<ArrayList<Answers>>();
 	private ArrayList<ArrayList<UserAnswers>> userAnswers = new ArrayList<ArrayList<UserAnswers>>();
 	
-	public Stats() {
+	public StatsBean() {
 	}
 
 	public Inqueries getInquery() {
@@ -77,10 +77,10 @@ public class Stats implements Serializable {
 			}
 			else {
 				for (Questions question: getQuestions()) {
-					ArrayList<Answers> answer = (ArrayList<Answers>) em.createNamedQuery("SELECT * FROM Answer WHERE QUESTIONS_QUESTIONID = " + question.getQuestionId());
+					ArrayList<Answers> answer = (ArrayList<Answers>) em.createNamedQuery("SELECT * FROM Answer WHERE QUESTIONS_QUESTIONID = " + question.getQuestionId()).getResultList();
 					
 					for(Answers userAnswer : answer) {
-						userAnswers.add((ArrayList<UserAnswers>) em.createNamedQuery("SELECT * FROM UserAnswers WHERE ANSWERID = " + userAnswer.getAnswerId()));
+						userAnswers.add((ArrayList<UserAnswers>) em.createNamedQuery("SELECT * FROM UserAnswers WHERE ANSWERID = " + userAnswer.getAnswerId()).getResultList());
 					}
 					
 					this.answers.add(answer);
