@@ -5,12 +5,17 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.annotation.ManagedBean;
+import javax.annotation.Resource;
 import javax.ejb.Timeout;
+import javax.ejb.Timer;
+import javax.ejb.TimerConfig;
+import javax.ejb.TimerService;
 import javax.enterprise.context.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,6 +34,11 @@ public class BackupBean implements Serializable {
 	private static final long serialVersionUID = -7833608034425721917L;
 	@PersistenceContext
 	private EntityManager em;
+	
+	@Resource
+	private TimerService timerService;
+	
+	private String backupDate;
 	
 	private class Backup implements Serializable{
 		private static final long serialVersionUID = -4351092081590712889L;
@@ -101,9 +111,16 @@ public class BackupBean implements Serializable {
 	
 	public BackupBean() {}
 	
+	protected String getBackupDate() {
+		return backupDate;
+	}
+
+	protected void setBackupDate(String backupDate) {
+		this.backupDate = backupDate;
+	}
+
 	/**
 	 * Method that stores the contents of the database and saves it to a file
-	 * 
 	 * @return - A String "success" when the backup is completed
 	 * @throws FileNotFoundException
 	 * @throws IOException
@@ -120,8 +137,18 @@ public class BackupBean implements Serializable {
 		return "success";
 	}
 	
-	public String scheduleBackup(String date) {
+	/**
+	 * Sets a timer after which the server will generate a backup;
+	 * @param backupDate
+	 * @return
+	 * @throws ParseException
+	 */
+	public String scheduleBackup(String backupDate) throws ParseException {
 		SimpleDateFormat formatter = new SimpleDateFormat("DD/MM/YYYY");
-		Date date = formatter.parse(date);
+		Date date = formatter.parse(backupDate);
+		
+		timerService.createSingleActionTimer(date, new TimerConfig());
+		
+		return "success";
 	}
 }
