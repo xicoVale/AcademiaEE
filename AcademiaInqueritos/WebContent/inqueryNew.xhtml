@@ -28,18 +28,30 @@
 
 			<h:outputLabel value="Start date:"></h:outputLabel>
 			#{msgs.startDate}   
+<<<<<<< Upstream, based on origin/faces
 			<h:inputText id="startDate" value="#{inqueriesBean.inquery.startDate}" label="Info"
 						required="true" requiredMessage="Please enter a start date [hh:mm; dd-mm-yyyy].">
 						<f:convertDateTime pattern="hh:mm; dd-mm-yyyy" />
+=======
+			<h:inputText id="startDate" value="#{inqueriesBean.inquery.startDate}" label="Start Date"
+						required="true" requiredMessage="Please enter a start date [dd-mm-yyyy].">
+						<f:convertDateTime pattern="dd-mm-yyyy" />
+>>>>>>> 77efe40 Changed date format requirements
 					</h:inputText>
 					<h:message for="startDate" errorClass="errorMessage" /><p/>	
 
 
 			<h:outputLabel value="End date:"></h:outputLabel>
 			#{msgs.endDate}
+<<<<<<< Upstream, based on origin/faces
 			<h:inputText id="endDate" value="#{inqueriesBean.inquery.endDate}"  label="Info"
 						required="true" requiredMessage="Please enter an end date [hh:mm; dd-mm-yyyy].">
 						<f:convertDateTime pattern="hh:mm; dd-mm-yyyy" />
+=======
+			<h:inputText id="endDate" value="#{inqueriesBean.inquery.endDate}" label="End Date"
+						required="true" requiredMessage="Please enter an end date [dd-mm-yyyy].">
+						<f:convertDateTime pattern="dd-mm-yyyy" />
+>>>>>>> 77efe40 Changed date format requirements
 					</h:inputText>
 					<h:message for="endDate" styleClass="errorMessage" /><p/>	
 
