@@ -18,7 +18,7 @@ import entities.Users;
 
 @ManagedBean
 @RequestScoped
-public class Promote implements Serializable{
+public class PromoteBean implements Serializable{
 
 	private static final long serialVersionUID = -6371307947553281102L;
 	
@@ -30,7 +30,7 @@ public class Promote implements Serializable{
 	@Resource
 	UserTransaction utx;
 
-	public Promote() {
+	public PromoteBean() {
 	}
 
 	public Users getUser() {
