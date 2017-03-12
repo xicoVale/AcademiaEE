@@ -41,7 +41,7 @@ public class PromoteBean implements Serializable{
 		this.user = user;
 	}
 	/**
-	 * Gives superUser permitions to the given user
+	 * Gives superUser permissions to the given user
 	 * 
 	 * 
 	 * @param user - The user to be promoted
@@ -63,7 +63,7 @@ public class PromoteBean implements Serializable{
 		
 		else {
 			utx.begin();
-			em.createNamedQuery("UPDATE Users "
+			em.createNativeQuery("UPDATE Users "
 					+ "SET USERROLE_ROLEID = 2 "
 					+ "WHERE USERNAME = " + user.getUserName());
 			utx.commit();
