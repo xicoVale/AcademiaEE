@@ -2,6 +2,7 @@ package beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -61,7 +62,12 @@ public class StatsBean implements Serializable {
 	public void setUserAnswers(ArrayList<ArrayList<UserAnswers>> userAnswers) {
 		this.userAnswers = userAnswers;
 	}
+	/**
+	 * Retrieves the inquiries questions and answers from the database and processes them.
 
+	 * @param inquery
+	 * @return
+	 */
 	public String showStats(Inqueries inquery) {
 		this.inquery = em.find(Inqueries.class, inquery.getInqueryId());
 		
@@ -69,23 +75,45 @@ public class StatsBean implements Serializable {
 			return "inqueryDoesNotExist";
 		}
 		else {
-			// Get inquery questions from the Database
-			setQuestions((ArrayList<Questions>)em.createNamedQuery("SELECT * FROM Questions WHERE INQUERY_INQUERYID = " + this.inquery.getInqueryId()).getResultList());
+			// Get inquiry questions from the Database
+			List<Object[]> quests = em.createNativeQuery("SELECT * FROM Questions WHERE INQUERY_INQUERYID = " + getInquery().getInqueryId()).getResultList();
 			
-			if(getQuestions() == null) {
+			for(Object[] object: quests) {
+				questions.add(Questions.parseQuestion(object, em));
+			}
+			
+			if(getQuestions().isEmpty()) {
 				return "inqueryHasNoQuestions";
 			}
+			
 			else {
-				for (Questions question: getQuestions()) {
-					ArrayList<Answers> answer = (ArrayList<Answers>) em.createNamedQuery("SELECT * FROM Answer WHERE QUESTIONS_QUESTIONID = " + question.getQuestionId()).getResultList();
-					
-					for(Answers userAnswer : answer) {
-						userAnswers.add((ArrayList<UserAnswers>) em.createNamedQuery("SELECT * FROM UserAnswers WHERE ANSWERID = " + userAnswer.getAnswerId()).getResultList());
-					}
-					
-					this.answers.add(answer);
+				processAnswers();
+			}
+			return "success";
+		}
+	}
+	/**
+	 * Retrieves the question's answers from the database and processes them
+	 */
+	@SuppressWarnings("unchecked")
+	private void processAnswers() {
+		for (Questions question: getQuestions()) {
+			List<Object[]> answersDB = em.createNativeQuery("SELECT * FROM Answers WHERE QUESTIONS_QUESTIONID = " + question.getQuestionId()).getResultList();
+			
+			for(Object[] object : answersDB) {
+				ArrayList<Answers> answer = new ArrayList<Answers>();
+				ArrayList<UserAnswers> userAnswer = new ArrayList<UserAnswers>();
+				Answers ans = Answers.parseAnswer(object, em);
+				answer.add(ans);
+				
+				List<Object[]> userA = em.createNativeQuery("SELECT * FROM UserAnswers WHERE ANSWERID = " + ans.getAnswerId()).getResultList();
+				
+				for(Object[] obj : userA) {
+					userAnswer.add(UserAnswers.parseUserAnser(obj, em));
 				}
-				return "success";
+				
+				answers.add(answer);
+				userAnswers.add(userAnswer);
 			}
 		}
 	}
