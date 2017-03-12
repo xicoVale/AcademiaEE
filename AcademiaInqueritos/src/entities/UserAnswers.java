@@ -3,6 +3,7 @@ package entities;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.Table;
@@ -69,5 +70,20 @@ public class UserAnswers implements Serializable {
 		} else if (!userName.equals(other.userName))
 			return false;
 		return true;
-	}   
+	}  
+	/**
+	 * Parses the object array returned from the database into a UserAnswers
+	 * 
+	 * @param object
+	 * @param em
+	 * @return
+	 */
+	public static UserAnswers parseUserAnser(Object[] object, EntityManager em) {
+		UserAnswers userAnswer = new UserAnswers();
+		
+		userAnswer.setUserName(em.find(Users.class, (String) object[1]));
+		userAnswer.setAnswerId(em.find(Answers.class, (Integer) object[0]));
+		
+		return userAnswer;
+	}
 }
