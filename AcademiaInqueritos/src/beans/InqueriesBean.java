@@ -2,10 +2,12 @@ package beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
-import javax.annotation.ManagedBean;
 import javax.annotation.Resource;
+import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +16,7 @@ import javax.transaction.UserTransaction;
 import entities.Answers;
 import entities.Inqueries;
 import entities.Questions;
+import entities.Users;
 
 /**
  * Session Bean implementation class InqueriesBean
@@ -28,28 +31,37 @@ public class InqueriesBean implements Serializable {
 	private EntityManager em;
 	@Resource
 	private UserTransaction utx;
-
+	
 	private Inqueries inquery = new Inqueries();
 	private Questions question = new Questions();
 	private ArrayList<Answers> answers = new ArrayList<Answers>();
 	private ArrayList<Questions> questionArray = new ArrayList<Questions>();
-
+	private ArrayList<Inqueries> inqueries = new ArrayList<Inqueries>();
+	
+	
 	/**
 	 * Default constructor.
 	 */
 	public InqueriesBean() {
-
+		for(int i = 0; i < 4; i++) {
+			answers.add(new Answers());
+		}
 	}
-
+	
+	/**
+	 * Searches the database for another inquiry with the same title and that is active at the same time.
+	 * 
+	 * @param inquery
+	 * @return - false if no other inquiries exist or true otherwise
+	 */
 	private Boolean verifySameNameAndSameDate(Inqueries inquery) {
-		ArrayList<Inqueries> inqueries = (ArrayList<Inqueries>) em.createNamedQuery(inquery.getTitle(), Inqueries.class)
-				.getResultList();
-
+		List<Object[]> inqueries = em.createNativeQuery("SELECT * FROM Inqueries WHERE TITLE LIKE '" + inquery.getTitle() + "'").getResultList();
 		if (inqueries.isEmpty()) {
 			return false;
 		} else {
-			for (Inqueries inq : inqueries) {
-
+			for (int i = 0; i < inqueries.size(); i++) {
+				Inqueries inq = Inqueries.parseInquery(inqueries.get(i), em);
+				
 				if (this.inquery.getTitle().equals(inq.getTitle())) {
 
 					Date dateEndA = inquery.getEndDate();
@@ -68,7 +80,6 @@ public class InqueriesBean implements Serializable {
 
 					} else if (dateStartA.compareTo(dateStartB) <= 0 && dateEndA.compareTo(dateEndB) >= 0) {
 						return true;
-
 					}
 
 				} else {
@@ -76,11 +87,16 @@ public class InqueriesBean implements Serializable {
 				}
 			}
 			return false;
-
 		}
-
 	}
 
+	/**
+	 * Starts the process of adding an inquiry to the database
+	 * 
+	 * @param inquery
+	 * @return
+	 * @throws Exception
+	 */
 	public String registerInqueryNext(Inqueries inquery) throws Exception {
 		if (verifySameNameAndSameDate(inquery)) {
 			return "sameNameAndCoincidenceDates";
@@ -88,16 +104,20 @@ public class InqueriesBean implements Serializable {
 		} else {
 			utx.begin();
 			em.persist(inquery);
-			utx.commit();
-			this.inquery = (Inqueries) em.createNamedQuery(
-					"SELECT * FROM (SELECT * FROM Inqueries WHEN USER_USERNAME= '" + inquery.getUser().getUserName()
-							+ "' AND TITLE= '" + inquery.getTitle() + "') AS I WHEN INQUERYID= MAX(INQUERYID) ");
+			em.flush();
+			
 			registerQuestion(this.question);
 
 			return "success";
 		}
 	}
 
+	/** Starts the process of adding an inquiry to the database
+	 * 
+	 * @param inquery
+	 * @return
+	 * @throws Exception
+	 */
 	public String registerInquery(Inqueries inquery) throws Exception {
 		if (verifySameNameAndSameDate(inquery)) {
 			return "sameNameAndCoincidenceDates";
@@ -105,10 +125,7 @@ public class InqueriesBean implements Serializable {
 		} else {
 			utx.begin();
 			em.persist(inquery);
-			utx.commit();
-			this.inquery = (Inqueries) em.createNamedQuery(
-					"SELECT * FROM (SELECT * FROM Inqueries WHEN USER_USERNAME= '" + inquery.getUser().getUserName()
-							+ "' AND TITLE= '" + inquery.getTitle() + "') AS I WHEN INQUERYID= MAX(INQUERYID) ");
+			em.flush();
 			registerQuestion(this.question);
 
 			return "success";
@@ -120,61 +137,77 @@ public class InqueriesBean implements Serializable {
 		if (this.inquery == null) {
 			return "inqueryNotExist";
 		} else {
-
-			this.questionArray = (ArrayList<Questions>) em.createNamedQuery("SELECT * FROM Questions WHEN INQUERY_INQUERYID= '" + inquery.getInqueryId() + "'").getResultList();
-
+			List<Object[]> questions = em.createNativeQuery("SELECT * FROM Questions WHERE INQUERY_INQUERYID= '" + inquery.getInqueryId() + "'").getResultList();
+			
+			for(Object[] question: questions) {
+				questionArray.add(Questions.parseQuestion(question, em));
+			}
 			StringBuilder query = new StringBuilder();
-			query.append("SELECT * FROM Answers WHEN QUESTIONS_QUESTIONSID= ");
+			query.append("SELECT * FROM Answers WHERE QUESTIONS_QUESTIONSID = ");
 
 			for (Questions ques : questionArray) {
 				if (questionArray.iterator().hasNext()) {
 					query.append(ques.getQuestionId());
 				} else {
-					query.append(ques.getQuestionId() + "OR QUESTIONS_QUESTIONSID= ");
+					query.append(ques.getQuestionId() + "OR QUESTIONS_QUESTIONSID = ");
 				}
 
 			}
 
-			this.answers = (ArrayList<Answers>) em.createNamedQuery(query.toString()).getResultList();
+			List<Object[]> answers = em.createNativeQuery(query.toString()).getResultList();
+			for(Object[] answer: answers) {
+				this.answers.add(Answers.parseAnswer(answer, em));
+			}
 
 			return "success";
 		}
 	}
 
 	public Inqueries getInquery() {
-		return inquery;
+		return this.inquery;
 	}
 
 	public void setInquery(Inqueries inquery) {
 		this.inquery = inquery;
 	}
+	
+	public ArrayList<Inqueries> getInqueries() {
+		return this.inqueries;
+	}
+
+	public void setInqueries(ArrayList<Inqueries> inqueries) {
+		this.inqueries = inqueries;
+	}
 
 	// QUESTIONS
-
+	/**
+	 * Adds a question to the database
+	 * 
+	 * @param question
+	 * @return
+	 * @throws Exception
+	 */
 	public String registerQuestion(Questions question) throws Exception {
-		question.setInquery(inquery);
-		utx.begin();
+		question.setInquery(this.inquery);
 		em.persist(question);
-
-		this.question = (Questions) em
-				.createNamedQuery("SELECT * FROM (SELECT * FROM QUESTIONS WHEN INQUERYID= '" + inquery.getInqueryId());
-
-		registerAnswers(answers);
-		utx.commit();
+		em.flush();	
+		registerAnswers(this.answers);
 		return "success";
 
 	}
-
+	/**
+	 * Adds a question to the database
+	 * 
+	 * @param question
+	 * @return
+	 * @throws Exception
+	 */
 	public String registerQuestionNext(Questions question) throws Exception {
-		question.setQuestionId(inquery.getInqueryId());
-		utx.begin();
+		question.setQuestionId(this.inquery.getInqueryId());;
 		em.persist(question);
-		this.question = (Questions) em
-				.createNamedQuery("SELECT * FROM QUESTIONS WHEN INQUERYID= " + inquery.getInqueryId());
-		registerAnswers(answers);
-		utx.commit();
+		em.flush();
+		registerAnswers(this.answers);
 		return "success";
-
 	}
 
 	public Questions getQuestion() {
@@ -186,17 +219,21 @@ public class InqueriesBean implements Serializable {
 	}
 
 	// ANSWERS
-
-	public String registerAnswers(ArrayList<Answers> answers) {
-		int numberQuestion = question.getQuestionId();
-
-		for (int i = 0; i > answers.size(); i++) {
-			answers.get(i).setAnswerId(numberQuestion);
-			em.persist(answers.get(i));
-
+	/**
+	 * Adds a question's answers to the database
+	 * 
+	 * @param answers
+	 * @return
+	 * @throws Exception
+	 */
+	public String registerAnswers(ArrayList<Answers> answers) throws Exception {
+		for(Answers answer: answers) {
+			answer.setQuestions(question);
+			em.persist(answer);
 		}
+		utx.commit();
+		
 		return "success";
-
 	}
 
 	public ArrayList<Answers> getAnswers() {

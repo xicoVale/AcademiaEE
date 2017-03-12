@@ -1,13 +1,17 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 
 /**
  * Entity implementation class for Entity: Questions
@@ -15,11 +19,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="Questions")
+@TableGenerator(name="seq", table="SEQUENCE", pkColumnName = "SEQ_NAME", valueColumnName="SEQ_COUNT", allocationSize=100)
 public class Questions implements Serializable {
 
 	 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seq")
 	private Integer questionId;
 	@Basic(optional = false)
 	private String questionText;
@@ -81,5 +86,21 @@ public class Questions implements Serializable {
 		return true;
 	}
 	
-   
+	/**
+	 * Creates Question from an object array
+	 * 
+	 * @param object
+	 * @return
+	 */
+	public static Questions parseQuestion(Object[] object, EntityManager em) {
+		Questions question = new Questions();
+		
+		question.setQuestionId((Integer) object[0]);
+		question.setQuestionText((String) object[1]);
+		Inqueries inquery = em.find(Inqueries.class, (Integer) object[3]);
+		question.setInquery(inquery);
+		
+		return question;
+	}
+	
 }

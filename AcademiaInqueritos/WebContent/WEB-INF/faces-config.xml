@@ -4,16 +4,64 @@
  <navigation-rule>
   <from-view-id>/login.xhtml</from-view-id>
   <navigation-case>
-   <from-action>#{queryBean.registerUser(queryBean.user)}</from-action>
+   <from-action>#{userBean.registerUser(userBean.user)}</from-action>
    <from-outcome>userExists</from-outcome>
    <to-view-id>/login.xhtml</to-view-id>
   </navigation-case>
   <navigation-case>
-   <from-action>#{queryBean.registerUser(queryBean.user)}</from-action>
+   <from-action>#{userBean.registerUser(userBean.user)}</from-action>
    <from-outcome>success</from-outcome>
    <to-view-id>/welcome.xhtml</to-view-id>
   </navigation-case>
-
+  <navigation-case>
+   <from-action>#{userBean.login(userBean.user)}</from-action>
+   <from-outcome>userNotExists</from-outcome>
+   <to-view-id>/login.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-action>#{userBean.login(userBean.user)}</from-action>
+   <from-outcome>success</from-outcome>
+   <to-view-id>/welcome.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/inqueryNew.html</from-view-id>
+  <navigation-case>
+   <from-action>#{inqueriesBean.registerInquery(inqueriesBean.inquery)}</from-action>
+   <from-outcome>success</from-outcome>
+   <to-view-id>/welcome.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-action>#{inqueriesBean.registerInquery(inqueriesBean.inquery)}</from-action>
+   <from-outcome>someNameAndCoincidenceDates</from-outcome>
+   <to-view-id>/inqueryNew.html</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-action>#{inqueriesBean.registerInqueryNext(inqueriesBean.inquery)}</from-action>
+   <from-outcome>success</from-outcome>
+   <to-view-id>/inqueryNewNext.html</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-action>#{inqueriesBean.registerInqueryNext(inqueriesBean.inquery)}</from-action>
+   <from-outcome>someNameAndCoincidenceDates</from-outcome>
+   <to-view-id>/inqueryNew.html</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/inqueryNewNext.html</from-view-id>
+  <navigation-case>
+   <from-action>#{inqueryBean.registerQuestionNext(inqueryBean.inquery)}</from-action>
+   <from-outcome>success</from-outcome>
+   <to-view-id>/inqueryNewNext.html</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-action>#{inqueryBean.registerQuestion(inqueryBean.inquery)}</from-action>
+   <from-outcome>success</from-outcome>
+   <to-view-id>/welcome.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/welcome.xhtml</from-view-id>
  </navigation-rule>
  <application/>
 </faces-config>

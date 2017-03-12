@@ -19,8 +19,8 @@
 				<h:outputText id="creator" value="Creator"></h:outputText>
 
 				<h:panelGroup style="display:block; text-align:left">
-					<h:selectOneRadio value="#{user.inquery}" layout="pageDirection">
-						<t:selectItem itemLabel="Inquery 1	by Charles" />
+					<h:selectOneRadio id="inquery" value="#{inqueriesBean.inqueries}" label="Inquery" layout="pageDirection">
+						<f:selectItem value="#{inqueriesBean.userAnswer}"/>
 					</h:selectOneRadio>
 				</h:panelGroup>
 			</h:panelGrid>

@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core_1_1">
+
+<ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
+	<ui:define name="content">
+
+		<h:head>
+			<h:outputStylesheet library="css" name="styles.css" />
+			<title>#{msgs.title}</title>
+		</h:head>
+		
+		<h:form>
+			<h1>#{msgs.enterInqueriesBean}</h1>
+			
+			<h:panelGrid columns="2">
+			
+			<h:outputLabel value="Backup date:"></h:outputLabel>
+			#{msgs.backupDate}   
+			<h:inputText id="backup" value="#{backupBean.backup}" label="Info"
+						required="true" requiredMessage="Please enter a date [hh:mm; dd-mm-yyyy].">
+						<f:convertDateTime pattern="hh:mm; dd-mm-yyyy" />
+					</h:inputText>
+					<h:message for="backup" errorClass="errorMessage" />
+			<h:commandButton value="Set" action="welcome"/>
+			<p/>
+			
+			<h:outputLabel value="Recurrent backup date: "></h:outputLabel>
+			#{msgs.backupRecurrentDate}   
+           <h:inputText id="backupRec" value="#{backupBean.backup}" label="Info"
+						required="true" requiredMessage="Please enter a date [hh:mm; dd-mm-yyyy].">
+						<f:convertDateTime pattern="hh:mm; dd-mm-yyyy" />
+					</h:inputText>
+					<h:message for="backupRec" errorClass="errorMessage" />
+			<h:commandButton value="Set" action="welcome"/>
+			<p/>
+					
+			</h:panelGrid>
+			<br />
+		</h:form>
+			<h:link value="Back" styleClass="button" outcome="welcome"/>
+	</ui:define>
+
+</ui:composition>
+</html>

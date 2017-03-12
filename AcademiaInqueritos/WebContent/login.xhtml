@@ -5,7 +5,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core_1_1">
+    xmlns:c="http://java.sun.com/jsp/jstl/core_1_1">
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
@@ -21,28 +21,24 @@
 
 			<h:outputText value="Name"></h:outputText>
 			  #{msgs.name}
-            <h:inputText id="name"
-            			 value="#{userBean.user.userName}"
+            <h:inputText id="name" value="#{userBean.user.userName}" label="Name"
             			 required="true" requiredMessage="Please enter a user name."></h:inputText>
 			<h:message for="name" errorClass="errorMessage" />
 
 
 			<h:outputText value="Password"></h:outputText>
 			  #{msgs.password}
-            <h:inputSecret id="password"
-            			   value="#{userBean.user.password}"
-            			   required="true" requiredMessage="Please enter a password.">
+            <h:inputSecret id="password" value="#{userBean.user.password}" label="Password"
+            			  required="true" requiredMessage="Please enter a password.">
 					<f:validateLength minimum="6" /></h:inputSecret>
 			<h:message for="password" errorClass="errorMessage" />
 			</h:panelGrid>
+			
 			<br />
 			<h:commandButton value="Login" action="#{userBean.login(userBean.user)}"></h:commandButton>
 			<h:commandButton value="Register" action="#{userBean.registerUser(userBean.user)}"></h:commandButton>
 		</h:form>
 
-		<!-- falta validar o botão login: user, suepruser ou admin -->
-		<!-- corrigir a mensagem de erro -->
-		
 	</ui:define>
 </ui:composition>
 </html>
