@@ -145,13 +145,19 @@ public class InqueriesBean implements Serializable {
 		}
 	}
 	
-//	public String showInqueries(){
-//		 
-//		Date today = new Date((DateTimeFormatter.ofPattern("yyyy/MM/dd").format(LocalDate.now())));
-//		 this.
-//		 
-//		
-//	}
+	public String showInqueries(){
+		 
+		Date today = new Date((DateTimeFormatter.ofPattern("yyyy/MM/dd").format(LocalDate.now())));
+		 this.inqueries = (ArrayList<Inqueries>) em.createNamedQuery("SELECT * FROM Inqueries WHEN STARTDATE < #"+today+"# AND ENDDATE > #"+today+"#");
+		 
+		 if(this.inqueries==null){
+			 return "notInqueriesToday";
+		 }
+		 else{
+			 return "success";
+		 }
+		
+	}
 
 	public Inqueries getInquery() {
 		return inquery;
