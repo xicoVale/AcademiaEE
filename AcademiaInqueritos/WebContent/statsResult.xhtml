@@ -10,16 +10,11 @@
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
 		<h:outputLabel value="Statistical analysis"></h:outputLabel>
-		<p />
+		<p/>
 		<h:form>
 			<h:panelGroup style="display:block; text-align:left">
-				<ul>
-					<ui:repeat value="#{bookCatalog.books}" var="book">
-						<li><h:link value="#{book.title}" outcome="book">
-								<f:param name="id" value="#{book.id}" />
-							</h:link></li>
-					</ui:repeat>
-				</ul>
+				
+				
 				<h:commandButton value="Back" action="statsSelect"></h:commandButton>
 				<h:commandButton value="Welcome Page" action="welcome"></h:commandButton>
 			</h:panelGroup>

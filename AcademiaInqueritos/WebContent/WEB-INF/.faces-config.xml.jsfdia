@@ -62,7 +62,7 @@
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#inqueryNewNext.html"
-  PATH="/inqueryNewNext.html" SHAPE="304,353,0,0" model-entity="JSFProcessGroup">
+  PATH="/inqueryNewNext.html" SHAPE="624,360,50,57" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#inqueryNewNext.html:0" NAME="item"
    PATH="/inqueryNewNext.html" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
