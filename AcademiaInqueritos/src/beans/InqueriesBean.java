@@ -1,8 +1,9 @@
 package beans;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,6 @@ import javax.transaction.UserTransaction;
 import entities.Answers;
 import entities.Inqueries;
 import entities.Questions;
-import entities.Users;
 
 /**
  * Session Bean implementation class InqueriesBean
@@ -37,8 +37,7 @@ public class InqueriesBean implements Serializable {
 	private ArrayList<Answers> answers = new ArrayList<Answers>();
 	private ArrayList<Questions> questionArray = new ArrayList<Questions>();
 	private ArrayList<Inqueries> inqueries = new ArrayList<Inqueries>();
-	
-	
+
 	/**
 	 * Default constructor.
 	 */
@@ -162,6 +161,28 @@ public class InqueriesBean implements Serializable {
 			return "success";
 		}
 	}
+	/**
+	 * Gets today's inquiries from the database
+	 *
+	 * @return
+	 */
+	public String showInqueries(){
+		
+		Date today = new Date((DateTimeFormatter.ofPattern("yyyy/MM/dd").format(LocalDate.now())));
+
+		List<Object[]> inqs = em.createNamedQuery("SELECT * FROM Inqueries WHEN STARTDATE < #"+today+"# AND ENDDATE > #"+today+"#").getResultList();
+		
+		for(Object[] object: inqs) {
+			inqueries.add(Inqueries.parseInquery(object, em));
+		}
+		
+		if(this.inqueries==null){
+			 return "notInqueriesToday";
+		 }
+		 else{
+			 return "success";
+		 }
+	}
 
 	public Inqueries getInquery() {
 		return this.inquery;
@@ -172,14 +193,16 @@ public class InqueriesBean implements Serializable {
 	}
 	
 	public ArrayList<Inqueries> getInqueries() {
-		return this.inqueries;
+		return inqueries;
 	}
 
 	public void setInqueries(ArrayList<Inqueries> inqueries) {
 		this.inqueries = inqueries;
 	}
-
+	
+	
 	// QUESTIONS
+
 	/**
 	 * Adds a question to the database
 	 * 
