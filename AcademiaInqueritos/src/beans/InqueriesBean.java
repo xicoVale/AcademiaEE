@@ -107,7 +107,7 @@ public class InqueriesBean implements Serializable {
 			em.flush();
 			
 			registerQuestion(this.question);
-
+			utx.commit();
 			return "success";
 		}
 	}
@@ -231,8 +231,6 @@ public class InqueriesBean implements Serializable {
 			answer.setQuestions(question);
 			em.persist(answer);
 		}
-		utx.commit();
-		
 		return "success";
 	}
 
