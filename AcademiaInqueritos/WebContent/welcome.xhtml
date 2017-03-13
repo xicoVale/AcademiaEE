@@ -48,16 +48,22 @@
 		<p />
 		<h1>#{msgs.enterPromoteBean}</h1>
 		
+	
 	<ui:fragment  rendered="#{(userBean.user.userRole.roleId eq 1)}">
+		<h:form>
 		<div>
 			<h:outputText value="User to promote:"></h:outputText>
 			<br />
+			
 			<h:inputText id="promote" value="#{promoteBean.user.userName}" label="Promote" required="true"
 				requiredMessage="Please enter a user name."></h:inputText>
 			<h:message for="promote" errorClass="errorMessage" />
 			<h:commandButton value="Promote" action="#{promoteBean.promoteUser(promoteBean.user)}"></h:commandButton>
 		</div>
+		</h:form>
 	</ui:fragment>
+	
+	
 	</ui:define>
 </ui:composition>
 </html>
