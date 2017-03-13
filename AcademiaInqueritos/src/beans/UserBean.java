@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.security.SecureRandom;
 import java.util.Random;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
@@ -18,7 +19,7 @@ import entities.Users;
  * Session Bean implementation class QueryBean
  */
 @ManagedBean
-@SessionScoped
+@RequestScoped
 public class UserBean implements Serializable {
 	
 	/**
@@ -31,14 +32,21 @@ public class UserBean implements Serializable {
 	@Resource
 	private UserTransaction utx;
 	
-	private Users user = new Users();
+	private Users user;
 	
   
-/**   Default constructor.   **/   
+	/**   
+	 * Default constructor.  
+	 **/   
     public UserBean() {
+    	super();
     }
 
-
+    @PostConstruct
+    public void init() {
+    	user = new Users();
+    }
+    
 	public Users getUser() {
 		return this.user;
 	}

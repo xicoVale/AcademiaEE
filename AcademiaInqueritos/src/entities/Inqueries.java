@@ -3,15 +3,21 @@ package entities;
 import static javax.persistence.TemporalType.DATE;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 
 /**
@@ -20,12 +26,13 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name="Inqueries")
+@TableGenerator(name="seq", table="SEQUENCE", pkColumnName = "SEQ_NAME", valueColumnName="SEQ_COUNT", allocationSize=100)
 public class Inqueries implements Serializable {
 
 	
 	@Id
 	@Column(updatable = false)
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "seq")
 	private Integer inqueryId;
 	@Basic(optional = false)
 	private String title;
@@ -65,6 +72,11 @@ public class Inqueries implements Serializable {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
+	
+	public void setStartDate(String startDate) throws ParseException {
+		DateFormat format = new SimpleDateFormat("DD/MM/YYYY");
+		this.startDate = format.parse(startDate);
+	}
 	   
 	public Date getEndDate() {
  		return this.endDate;
@@ -73,8 +85,12 @@ public class Inqueries implements Serializable {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-
 	
+	public void setEndDate(String endDate) throws ParseException {
+		DateFormat format = new SimpleDateFormat("DD/MM/YYYY");
+		this.endDate = format.parse(endDate);
+	}
+
 	public Users getUser() {
 		return user;
 	}
@@ -106,5 +122,25 @@ public class Inqueries implements Serializable {
 			return false;
 		return true;
 	}
+	
+	/**
+	 * Creates an Inquery from an object array
+	 * 
+	 * @param object
+	 * @return
+	 */
+	public static Inqueries parseInquery(Object[] object, EntityManager em) {
+		Inqueries inquery = new Inqueries();
+		
+		inquery.setInqueryId((Integer) object[0]);
+		inquery.setEndDate((Date) object[1]);
+		inquery.setStartDate((Date) object[2]);
+		inquery.setTitle((String) object[3]);
+		Users creator = em.find(Users.class, (String) object[4]);
+		inquery.setUser(creator);
+		
+		return inquery;
+	}
+	
    
 }
