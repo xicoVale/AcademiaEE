@@ -170,13 +170,10 @@ public class InqueriesBean implements Serializable {
 	 */
 	public String showInqueries(){
 		
-		String today = (DateTimeFormatter.ofPattern("yyyy/MM/dd").format(LocalDate.now()));
 
-		List<Object[]> inqs = em.createNativeQuery("SELECT * FROM Inqueries WHEN STARTDATE < "+today+" AND ENDDATE > "+today).getResultList();
-		
-		for(Object[] object: inqs) {
-			inqueries.add(Inqueries.parseInquery(object, em));
-		}
+		String today = (DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now()));
+
+		inqueries = (ArrayList<Inqueries>)em.createNativeQuery("SELECT * FROM Inqueries WHERE '" + today + "' BETWEEN STARTDATE AND ENDDATE ", Inqueries.class).getResultList();
 		
 		if(this.inqueries==null){
 			 return "notInqueriesToday";

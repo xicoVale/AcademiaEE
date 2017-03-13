@@ -104,4 +104,17 @@
     TITLE="#{backupBean.recurrentTimer(backupBean.frequency)}:success" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#statsSelect.xhtml" PATH="/statsSelect.xhtml"
+  SHAPE="32,1425,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#statsSelect.xhtml:0" NAME="item"
+   PATH="/statsSelect.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{statsBean.showStats(inqueriesBean.inquery)}:#statsResult.xhtml"
+    NAME="output" PATH="/statsResult.xhtml"
+    TARGET="rules:#statsResult.xhtml"
+    TITLE="#{statsBean.showStats(inqueriesBean.inquery)}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#statsResult.xhtml" PATH="/statsResult.xhtml"
+  SHAPE="240,1665,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

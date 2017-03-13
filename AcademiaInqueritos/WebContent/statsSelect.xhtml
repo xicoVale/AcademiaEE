@@ -23,7 +23,7 @@
 
 				<h:panelGroup style="display:block; text-align:left">
 				
-				<h:outputText id="inqueries" value="#{inqueriesBean.showExpiredInqueries()}"></h:outputText>
+				<h:outputText id="inqueries" value="#{inqueriesBean.showInqueries()}"></h:outputText>
 					<h:selectOneRadio id="inquery" value="#{inqueriesBean.inqueries}" label="Inquery" layout="pageDirection">
 						<f:selectItem value="#{inqueriesBean.inquery}"  var="i" itemValue="#{inqueriesBean.inqueries[i].title}"
 						itemLabel="#{inqueriesBean.inqueries[i].title}" />
@@ -31,7 +31,7 @@
 				</h:panelGroup>
 			</h:panelGrid>
 			<p />
-			<h:commandButton value="Next" action="statsResult"></h:commandButton><p/>
+			<h:commandButton value="Next" action="#{statsBean.showStats(inqueriesBean.inquery)}"></h:commandButton><p/>
 		</h:form>
 		<h:link value="Back" styleClass="button" outcome="welcome"/>
 	</ui:define>
