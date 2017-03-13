@@ -17,19 +17,9 @@
 		<h:outputLabel value="Welcome #{userBean.user.userName}."></h:outputLabel>
 		<p />
 	   Please select an inquery:
-	   
-
 	   	<p />
 		<h:form>
-		
-		
-					 
-		
 			<h:panelGrid columns="3" width="100%" style="text-align: center">
-				
-				
-				
-
 				<h:panelGroup style="display:block; text-align:left">
 					<h:outputText id="title" value="Inquery title"></h:outputText>
 					 <h:selectOneRadio   value="#{inqueriesBean.inquery.inqueryId}" layout="pageDirection">
@@ -46,9 +36,6 @@
 			<h:commandButton value="Start" action="inqueryStart"></h:commandButton>
 			<p />
 		</h:form>
-		
-
-
 		<h:link value="Stats" styleClass="button" outcome="statsSelect" />
 
 		<h:link value="New" styleClass="button" outcome="inqueryNew"
