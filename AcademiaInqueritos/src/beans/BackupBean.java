@@ -12,14 +12,14 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.ManagedBean;
 import javax.annotation.Resource;
 import javax.ejb.ScheduleExpression;
+import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
-import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -31,7 +31,7 @@ import entities.UserRoles;
 import entities.Users;
 
 @ManagedBean
-@ApplicationScoped
+@Stateless
 public class BackupBean implements Serializable {
 
 	private static final long serialVersionUID = -7833608034425721917L;
