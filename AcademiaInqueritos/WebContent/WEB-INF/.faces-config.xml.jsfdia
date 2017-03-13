@@ -25,7 +25,16 @@
  <PROCESS-ITEM NAME="rules:#welcome.xhtml" PATH="/welcome.xhtml"
   SHAPE="256,33,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#welcome.xhtml:0" NAME="item"
-   PATH="/welcome.xhtml" model-entity="JSFProcessItem"/>
+   PATH="/welcome.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{promoteBean.promoteUser(promoteBean.user)}:#welcome.xhtml"
+    NAME="output" PATH="/welcome.xhtml" TARGET="rules:#welcome.xhtml"
+    TITLE="#{promoteBean.promoteUser(promoteBean.user)}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="userNotExists:#{promoteBean.promoteUser(promoteBean.user)}:#login.xhtml"
+    NAME="output1" PATH="/login.xhtml" TARGET="rules:#login.xhtml"
+    TITLE="#{promoteBean.promoteUser(promoteBean.user)}:userNotExists" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#inqueryNew.html" PATH="/inqueryNew.html"
   SHAPE="32,225,0,0" model-entity="JSFProcessGroup">
