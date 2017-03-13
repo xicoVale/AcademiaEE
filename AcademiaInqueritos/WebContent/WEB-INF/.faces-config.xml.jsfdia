@@ -86,4 +86,22 @@
     TITLE="#{inqueriesBean.editInquery(inqueriesBean.inquery)}:success" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#backups.xhtml" PATH="/backups.xhtml"
+  SHAPE="32,1025,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#backups.xhtml:0" NAME="item"
+   PATH="/backups.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{backupBean.scheduleBackup(backupBean.backupDate)}:#welcome.xhtml"
+    NAME="output" PATH="/welcome.xhtml" TARGET="rules:#welcome.xhtml"
+    TITLE="#{backupBean.scheduleBackup(backupBean.backupDate)}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="wrongDateFormat:#{backupBean.scheduleBackup(backupBean.backupDate)}:#backups.xhtml"
+    NAME="output1" PATH="/backups.xhtml" TARGET="rules:#backups.xhtml"
+    TITLE="#{backupBean.scheduleBackup(backupBean.backupDate)}:wrongDateFormat" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{backupBean.recurrentTimer(backupBean.frequency)}:#welcome.xhtml"
+    NAME="output2" PATH="/welcome.xhtml" TARGET="rules:#welcome.xhtml"
+    TITLE="#{backupBean.recurrentTimer(backupBean.frequency)}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
 </PROCESS>

@@ -81,5 +81,23 @@
    <to-view-id>/welcome.xhtml</to-view-id>
   </navigation-case>
  </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/backups.xhtml</from-view-id>
+  <navigation-case>
+   <from-action>#{backupBean.scheduleBackup(backupBean.backupDate)}</from-action>
+   <from-outcome>success</from-outcome>
+   <to-view-id>/welcome.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-action>#{backupBean.scheduleBackup(backupBean.backupDate)}</from-action>
+   <from-outcome>wrongDateFormat</from-outcome>
+   <to-view-id>/backups.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-action>#{backupBean.recurrentTimer(backupBean.frequency)}</from-action>
+   <from-outcome>success</from-outcome>
+   <to-view-id>/welcome.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
  <application/>
 </faces-config>
