@@ -22,7 +22,7 @@ public class PromoteBean implements Serializable{
 
 	private static final long serialVersionUID = -6371307947553281102L;
 	
-	private Users user = new Users();
+	private Users user;
 	
 	@PersistenceContext
 	EntityManager em;
@@ -31,6 +31,7 @@ public class PromoteBean implements Serializable{
 	UserTransaction utx;
 
 	public PromoteBean() {
+		user = new Users();
 	}
 
 	public Users getUser() {
@@ -55,9 +56,9 @@ public class PromoteBean implements Serializable{
 	 * @throws HeuristicRollbackException
 	 */
 	public String promoteUser(Users user) throws NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException {
-		user = em.find(Users.class, user.getUserName());
+		this.user = em.find(Users.class, user.getUserName());
 		
-		if(user == null) {
+		if(this.user == null) {
 			return "userNotExists";
 		}
 		
@@ -65,7 +66,7 @@ public class PromoteBean implements Serializable{
 			utx.begin();
 			em.createNamedQuery("UPDATE Users "
 					+ "SET USERROLE_ROLEID = 2 "
-					+ "WHERE USERNAME = " + user.getUserName());
+					+ "WHERE USERNAME = " + this.user.getUserName());
 			utx.commit();
 			
 			return "success";

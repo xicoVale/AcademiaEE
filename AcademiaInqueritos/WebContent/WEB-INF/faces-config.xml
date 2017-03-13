@@ -62,6 +62,16 @@
  </navigation-rule>
  <navigation-rule>
   <from-view-id>/welcome.xhtml</from-view-id>
+  <navigation-case>
+   <from-action>#{promoteBean.promoteUser(promoteBean.user)}</from-action>
+   <from-outcome>success</from-outcome>
+   <to-view-id>/welcome.xhtml</to-view-id>
+  </navigation-case>
+  <navigation-case>
+   <from-action>#{promoteBean.promoteUser(promoteBean.user)}</from-action>
+   <from-outcome>userNotExists</from-outcome>
+   <to-view-id>/login.xhtml</to-view-id>
+  </navigation-case>
  </navigation-rule>
  <application/>
 </faces-config>

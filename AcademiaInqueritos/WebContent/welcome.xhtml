@@ -27,7 +27,7 @@
 					<h:selectOneRadio id="inquery" value="#{inqueriesBean.inqueries}"
 						label="Inquery" layout="pageDirection"
 						rendered="#{not empty inqueriesBean.inqueries}">
-						<f:selectItem value="#{inqueriesBean.userAnswer}" />
+						<f:selectItem value="#{inqueriesBean.inquery}" />
 					</h:selectOneRadio>
 				</h:panelGroup>
 			</h:panelGrid>
@@ -50,12 +50,12 @@
 		<h:outputText value="User to promote:"
 			rendered="#{(userBean.user.userRole.roleId eq 1)}"></h:outputText>
 		<br />
-		<h:inputText id="promote" value="#{userBean.user.userName}"
+		<h:inputText id="promote" value="#{promoteBean.user.userName}"
 			label="Promote" required="true"
 			requiredMessage="Please enter a user name."
 			rendered="#{(userBean.user.userRole.roleId eq 1)}"></h:inputText>
 		<h:message for="name" errorClass="errorMessage" />
-		<h:commandButton value="Promote" action="#{promoteBean._____}"
+		<h:commandButton value="Promote" action="#{promoteBean.promoteUser(promoteBean.user)}"
 			rendered="#{(userBean.user.userRole.roleId eq 1)}"></h:commandButton>
 
 	</ui:define>
