@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -38,6 +39,8 @@ public class InqueriesBean implements Serializable {
 	private ArrayList<Questions> questionArray = new ArrayList<Questions>();
 	private ArrayList<Inqueries> inqueries = new ArrayList<Inqueries>();
 
+	
+	
 	/**
 	 * Default constructor.
 	 */
@@ -170,11 +173,17 @@ public class InqueriesBean implements Serializable {
 		
 		String today = (DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now()));
 
-		List<Object[]> inqs = em.createNativeQuery("SELECT * FROM Inqueries WHERE '" + today + "' BETWEEN STARTDATE AND ENDDATE ").getResultList();
+		inqueries = (ArrayList<Inqueries>) em.createNativeQuery("SELECT * FROM Inqueries WHERE '" + today + "' BETWEEN STARTDATE AND ENDDATE", Inqueries.class).getResultList();
 		
-		for(Object[] object: inqs) {
-			inqueries.add(Inqueries.parseInquery(object, em));
-		}
+//		List<Object[]> inqs = em.createNativeQuery("SELECT * FROM Inqueries WHERE '" + today + "' BETWEEN STARTDATE AND ENDDATE").getResultList();
+//		
+//		System.out.println("tamanho de inquirys:"+inqueries.size());
+//		for(Inqueries i:inqueries)
+//			System.out.println(i.getTitle());
+//		
+//		for(Object[] object: inqs) {
+//			inqueries.add(Inqueries.parseInquery(object, em));
+//		}
 		
 		if(this.inqueries==null){
 			 return "notInqueriesToday";
@@ -185,6 +194,7 @@ public class InqueriesBean implements Serializable {
 	}
 
 	public Inqueries getInquery() {
+		
 		return this.inquery;
 	}
 
@@ -193,6 +203,7 @@ public class InqueriesBean implements Serializable {
 	}
 	
 	public ArrayList<Inqueries> getInqueries() {
+		showInqueries();
 		return inqueries;
 	}
 
