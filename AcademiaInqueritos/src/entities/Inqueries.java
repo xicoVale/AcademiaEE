@@ -8,6 +8,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -106,5 +107,15 @@ public class Inqueries implements Serializable {
 			return false;
 		return true;
 	}
-   
+   public static Inqueries parseInquery(Object[] object, EntityManager em){
+	   Inqueries inquery = new Inqueries();
+	   
+	   inquery.setInqueryId((Integer)object[0]);
+	   inquery.setEndDate((Date) object[1]);
+	   inquery.setStartDate((Date) object[2]);
+	   inquery.setTitle((String) object[3]);
+	   inquery.setUser(em.find(Users.class, (String)object[4]));
+	   
+	   return inquery;
+   }
 }

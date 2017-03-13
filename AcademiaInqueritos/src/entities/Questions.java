@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -80,6 +81,14 @@ public class Questions implements Serializable {
 			return false;
 		return true;
 	}
-	
+	public static Questions parseQuestion(Object[] object, EntityManager em) {
+		Questions question = new Questions();
+		
+		question.setQuestionId((Integer) object[0]);
+		question.setQuestionText((String) object[1]);
+		question.setInquery(em.find(Inqueries.class, (Integer)object[2]));
+		
+		return question;
+	}
    
 }
