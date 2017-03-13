@@ -16,7 +16,7 @@
 		</h:head>
 		
 		<h:form>
-			<h1>#{msgs.enterInqueriesBean}</h1>
+			<h1>#{msgs.enterBackupBean}</h1>
 			
 			<h:panelGrid columns="2">
 			
@@ -35,10 +35,8 @@
 			<div>
 			#{msgs.backupRecurrentDate}   
            <h:inputText id="backupRec" value="#{backupBean.frequency}" label="Info"
-						required="true" requiredMessage="Please enter a date [DD/MM/YYYY].">
-						<f:convertDateTime pattern="d/M/yyyy" />
-					</h:inputText>
-					<h:message for="backupRec" errorClass="errorMessage" />
+						required="true" requiredMessage="Please enter a number of months."></h:inputText>
+						<h:message for="backupRec" errorClass="errorMessage" />
 			<h:commandButton value="Set" action="#{backupBean.recurrentTimer(backupBean.frequency)}"/>
 			<p/></div>
 					
