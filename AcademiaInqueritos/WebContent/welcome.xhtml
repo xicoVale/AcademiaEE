@@ -27,7 +27,8 @@
 				<h:outputText id="inqueries" value="#{inqueriesBean.showInqueries()}"></h:outputText>
 					<h:selectOneRadio id="inquery" value="#{inqueriesBean.inqueries}" label="Inquery" layout="pageDirection" 
 									  rendered="#{not empty inqueriesBean.inqueries}">
-    				    <f:selectItems value="#{inqueriesBean.inquery}" var="i" itemValue="#{inqueriesBean.inqueries[i].title}" itemLabel="#{inqueriesBean.inqueries[i].title}"  />
+    				    <f:selectItems value="#{inqueriesBean.inquery}" var="i" itemValue="#{inqueriesBean.inqueries[i].title}"
+    				    			  itemLabel="#{inqueriesBean.inqueries[i].title}"  />
     				    
 					</h:selectOneRadio>
 				</h:panelGroup>

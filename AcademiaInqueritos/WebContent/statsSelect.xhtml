@@ -22,8 +22,11 @@
 				<h:outputText id="creator" value="Creator"></h:outputText>
 
 				<h:panelGroup style="display:block; text-align:left">
+				
+				<h:outputText id="inqueries" value="#{inqueriesBean.showExpiredInqueries()}"></h:outputText>
 					<h:selectOneRadio id="inquery" value="#{inqueriesBean.inqueries}" label="Inquery" layout="pageDirection">
-						<f:selectItem value="#{statsBean.inquery}"/>
+						<f:selectItem value="#{inqueriesBean.inquery}"  var="i" itemValue="#{inqueriesBean.inqueries[i].title}"
+						itemLabel="#{inqueriesBean.inqueries[i].title}" />
 					</h:selectOneRadio>
 				</h:panelGroup>
 			</h:panelGrid>
