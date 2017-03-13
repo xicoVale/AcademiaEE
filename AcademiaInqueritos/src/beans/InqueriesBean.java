@@ -17,6 +17,7 @@ import javax.transaction.UserTransaction;
 import entities.Answers;
 import entities.Inqueries;
 import entities.Questions;
+import entities.UserAnswers;
 
 /**
  * Session Bean implementation class InqueriesBean
@@ -37,6 +38,7 @@ public class InqueriesBean implements Serializable {
 	private ArrayList<Answers> answers = new ArrayList<Answers>();
 	private ArrayList<Questions> questionArray = new ArrayList<Questions>();
 	private ArrayList<Inqueries> inqueries = new ArrayList<Inqueries>();
+	private ArrayList<UserAnswers> userAnswers = new ArrayList<UserAnswers>();
 
 	/**
 	 * Default constructor.
@@ -263,5 +265,28 @@ public class InqueriesBean implements Serializable {
 
 	public void setAnswers(ArrayList<Answers> answers) {
 		this.answers = answers;
+	}
+	
+	/**
+	 * Adds a user's answers to the database
+	 * 
+	 * @param answers
+	 * @return
+	 * @throws Exception
+	 */
+	public String registerUserAnswers(ArrayList<UserAnswers> userAnswer) throws Exception {
+		utx.begin();
+		for(UserAnswers userAnswers: userAnswer) {
+			em.persist(userAnswers);
+		}
+		utx.commit();
+		return "success";
+	}
+	public ArrayList<UserAnswers> getUserAnswers() {
+		return userAnswers;
+	}
+
+	public void setUserAnswers(ArrayList<UserAnswers> userAnswers) {
+		this.userAnswers = userAnswers;
 	}
 }

@@ -9,8 +9,22 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
+		
+		<h:head>
+			<h:outputStylesheet library="css" name="styles.css" />
+			<title>#{msgs.title}</title>
+		</h:head>
+	
+	    <h:form>
 	    
 	    
+	    
+	    <h:selectOneRadio required="true" id="userAnswer" value="#{inqueriesBean.userAnswers}"></h:selectOneRadio>
+	    
+	    <h:commandButton value="Save Answers" action="#{inqueriesBean.registerUserAnswers(inqueriesBean.userAnswers)}"></h:commandButton>
+	    <p/>
+		</h:form>
+		<h:link value="Back" styleClass="button" outcome="welcome"/>
 	</ui:define>
 </ui:composition>
 </html>
