@@ -125,7 +125,6 @@ public class UserBean implements Serializable {
 				return "success";
 			}
 			else {
-				this.user = new Users();
 				return "passwordFail";
 			}
 		}
