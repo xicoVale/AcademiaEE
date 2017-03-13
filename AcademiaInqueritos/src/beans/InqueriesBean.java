@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +17,6 @@ import javax.transaction.UserTransaction;
 import entities.Answers;
 import entities.Inqueries;
 import entities.Questions;
-import entities.Users;
 
 /**
  * Session Bean implementation class InqueriesBean
@@ -205,6 +202,7 @@ public class InqueriesBean implements Serializable {
 	
 	
 	// QUESTIONS
+
 	/**
 	 * Adds a question to the database
 	 * 
