@@ -9,6 +9,27 @@
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
+	
+		<h:head>
+			<h:outputStylesheet library="css" name="styles.css" />
+			<title>#{msgs.title}</title>
+		</h:head>
+
+			<h:form>
+			<h1>#{msgs.enterInqueriesBean}</h1>
+			<h:panelGrid columns="1">
+
+
+
+
+
+			</h:panelGrid>
+		<p/>
+		<h:commandButton value="Save" action="#{inqueriesBean.editInquery(inqueriesBean.inquery)}"
+						 rendered = "#{not inqueriesBean.editInquery}"></h:commandButton>
+		<p/>
+	</h:form>
+		<h:link value="Back" styleClass="button" outcome="welcome"/>
 	    
 	</ui:define>
 </ui:composition>
