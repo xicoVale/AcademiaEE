@@ -140,11 +140,19 @@ public class BackupBean implements Serializable {
 	
 	public BackupBean() {}
 	
-	protected String getBackupDate() {
+	public String getFrequency() {
+		return frequency;
+	}
+
+	public void setFrequency(String frequency) {
+		this.frequency = frequency;
+	}
+
+	public String getBackupDate() {
 		return backupDate;
 	}
 
-	protected void setBackupDate(String backupDate) {
+	public void setBackupDate(String backupDate) {
 		this.backupDate = backupDate;
 	}
 
