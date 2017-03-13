@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.Resource;
@@ -106,12 +107,34 @@ public class BackupBean implements Serializable {
 		}
 		
 		protected void setData(EntityManager em) {
-			setUserRoles((ArrayList<UserRoles>) em.createNamedQuery("SELECT * FROM UserRoles").getResultList());
-			setUsers((ArrayList<Users>) em.createNamedQuery("SELECT * FROM Users").getResultList());
-			setInqueries((ArrayList<Inqueries>) em.createNamedQuery("SELECT * FROM Inqueries").getResultList());
-			setQuestions((ArrayList<Questions>) em.createNamedQuery("SELECT * FROM Questions").getResultList());
-			setAnswers((ArrayList<Answers>) em.createNamedQuery("SELECT * FROM Answers").getResultList());
-			setUserAnswers((ArrayList<UserAnswers>) em.createNamedQuery("SELECT * FROM UserAnswers").getResultList());
+			List<Object[]> userR = em.createNamedQuery("SELECT * FROM UserRoles").getResultList();
+			for(Object[] object : userR) {
+				this.userRoles.add(UserRoles.parseUserRoles(object, em));
+			}
+			
+			List<Object[]> users = em.createNamedQuery("SELECT * FROM Users").getResultList();
+			for(Object[] object : users) {
+				this.users.add(Users.parseUser(object, em));
+			}
+			
+			List<Object[]> inquiries = em.createNamedQuery("SELECT * FROM Inqueries").getResultList();
+			for(Object[] object : inquiries) {
+				this.inqueries.add(Inqueries.parseInquery(object, em));
+			}
+			List<Object[]> questions = em.createNamedQuery("SELECT * FROM Questions").getResultList();
+			for(Object[] object : questions) {
+				this.questions.add(Questions.parseQuestion(object, em));
+			}
+			
+			List<Object[]> answers = em.createNamedQuery("SELECT * FROM Answers").getResultList();
+			for(Object[] object : answers) {
+				this.answers.add(Answers.parseAnswer(object, em));
+			}
+			
+			List<Object[]> userAnswers = em.createNamedQuery("SELECT * FROM UserAnswers").getResultList();
+			for(Object[] object : userAnswers) {
+				this.userAnswers.add(UserAnswers.parseUserAnswer(object, em));
+			}
 		}
 	}
 	
