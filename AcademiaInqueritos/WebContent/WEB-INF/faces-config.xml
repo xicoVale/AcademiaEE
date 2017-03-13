@@ -73,5 +73,13 @@
    <to-view-id>/login.xhtml</to-view-id>
   </navigation-case>
  </navigation-rule>
+ <navigation-rule>
+  <from-view-id>/inqueryEdit.xhtml</from-view-id>
+  <navigation-case>
+   <from-action>#{inqueriesBean.editInquery(inqueriesBean.inquery)}</from-action>
+   <from-outcome>success</from-outcome>
+   <to-view-id>/welcome.xhtml</to-view-id>
+  </navigation-case>
+ </navigation-rule>
  <application/>
 </faces-config>

@@ -76,4 +76,14 @@
     TITLE="#{inqueryBean.registerQuestion(inqueryBean.inquery)}:success" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#inqueryEdit.xhtml" PATH="/inqueryEdit.xhtml"
+  SHAPE="32,689,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#inqueryEdit.xhtml:0" NAME="item"
+   PATH="/inqueryEdit.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{inqueriesBean.editInquery(inqueriesBean.inquery)}:#welcome.xhtml"
+    NAME="output" PATH="/welcome.xhtml" TARGET="rules:#welcome.xhtml"
+    TITLE="#{inqueriesBean.editInquery(inqueriesBean.inquery)}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
 </PROCESS>
