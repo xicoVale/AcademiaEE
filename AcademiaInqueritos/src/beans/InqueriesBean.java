@@ -243,5 +243,4 @@ public class InqueriesBean implements Serializable {
 	public void setAnswers(ArrayList<Answers> answers) {
 		this.answers = answers;
 	}
-
 }
