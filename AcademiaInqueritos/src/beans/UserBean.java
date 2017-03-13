@@ -7,7 +7,7 @@ import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
@@ -19,7 +19,7 @@ import entities.Users;
  * Session Bean implementation class QueryBean
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class UserBean implements Serializable {
 	
 	/**
@@ -79,7 +79,6 @@ public class UserBean implements Serializable {
 	}
 
 	public String registerUser(Users user)  throws Exception{
-
 		if (userExists(user.getUserName())) {
 			return "UserExists";
 
@@ -115,6 +114,7 @@ public class UserBean implements Serializable {
 		this.user = em.find(Users.class, user.getUserName());
 		
 		if(this.user == null){
+			setUser(new Users());
 			return "userNotExists";
 			
 		}else{	
@@ -124,7 +124,6 @@ public class UserBean implements Serializable {
 				return "success";
 			}
 			else {
-				this.user = null;
 				return "passwordFail";
 			}
 		}
