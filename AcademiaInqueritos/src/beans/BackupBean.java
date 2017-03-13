@@ -107,31 +107,31 @@ public class BackupBean implements Serializable {
 		}
 		
 		protected void setData(EntityManager em) {
-			List<Object[]> userR = em.createNamedQuery("SELECT * FROM UserRoles").getResultList();
+			List<Object[]> userR = em.createNativeQuery("SELECT * FROM UserRoles").getResultList();
 			for(Object[] object : userR) {
 				this.userRoles.add(UserRoles.parseUserRoles(object, em));
 			}
 			
-			List<Object[]> users = em.createNamedQuery("SELECT * FROM Users").getResultList();
+			List<Object[]> users = em.createNativeQuery("SELECT * FROM Users").getResultList();
 			for(Object[] object : users) {
 				this.users.add(Users.parseUser(object, em));
 			}
 			
-			List<Object[]> inquiries = em.createNamedQuery("SELECT * FROM Inqueries").getResultList();
+			List<Object[]> inquiries = em.createNativeQuery("SELECT * FROM Inqueries").getResultList();
 			for(Object[] object : inquiries) {
 				this.inqueries.add(Inqueries.parseInquery(object, em));
 			}
-			List<Object[]> questions = em.createNamedQuery("SELECT * FROM Questions").getResultList();
+			List<Object[]> questions = em.createNativeQuery("SELECT * FROM Questions").getResultList();
 			for(Object[] object : questions) {
 				this.questions.add(Questions.parseQuestion(object, em));
 			}
 			
-			List<Object[]> answers = em.createNamedQuery("SELECT * FROM Answers").getResultList();
+			List<Object[]> answers = em.createNativeQuery("SELECT * FROM Answers").getResultList();
 			for(Object[] object : answers) {
 				this.answers.add(Answers.parseAnswer(object, em));
 			}
 			
-			List<Object[]> userAnswers = em.createNamedQuery("SELECT * FROM UserAnswers").getResultList();
+			List<Object[]> userAnswers = em.createNativeQuery("SELECT * FROM UserAnswers").getResultList();
 			for(Object[] object : userAnswers) {
 				this.userAnswers.add(UserAnswers.parseUserAnswer(object, em));
 			}
