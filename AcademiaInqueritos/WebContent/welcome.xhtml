@@ -12,7 +12,7 @@
 		<h:head>
 			<h:outputStylesheet library="css" name="styles.css" />
 		</h:head>
-		
+
 		<h:outputLabel value="Welcome #{userBean.user.userName}."></h:outputLabel>
 		<p />
 	   Please select an inquery:
@@ -24,9 +24,11 @@
 				<h:outputText id="expDate" value="Expiration date"></h:outputText>
 
 				<h:panelGroup style="display:block; text-align:left">
-					<h:selectOneRadio id="inquery" value="#{inqueriesBean.inqueries}" label="Inquery" layout="pageDirection"
-						rendered="#{not empty inqueriesBean.inqueries}">
-						<f:selectItem value="#{inqueriesBean.inquery}" />
+				<h:outputText id="inqueries" value="#{inqueriesBean.showInqueries()}"></h:outputText>
+					<h:selectOneRadio id="inquery" value="#{inqueriesBean.inqueries}" label="Inquery" layout="pageDirection" 
+									  rendered="#{not empty inqueriesBean.inqueries}">
+    				    <f:selectItems value="#{inqueriesBean.inquery}" var="i" itemValue="#{inqueriesBean.inqueries[i].title}" itemLabel="#{inqueriesBean.inqueries[i].title}"  />
+    				    
 					</h:selectOneRadio>
 				</h:panelGroup>
 			</h:panelGrid>
@@ -35,29 +37,32 @@
 			<p />
 		</h:form>
 
-		<h:link value="Stats" styleClass="button" outcome="statsSelect"/>
-			
-		<h:link value="New" styleClass="button" outcome="inqueryNew" 
-			rendered="#{(userBean.user.userRole.roleId eq 1) or (userBean.user.userRole.roleId eq 2)}"/>
-		
-		<h:link value="Edit" styleClass="button" outcome="inqueryEdit" 
-			rendered="#{(userBean.user.userRole.roleId eq 1) or (userBean.user.userRole.roleId eq 2)}"/>
-		<p/>
-		<h:link value="Backup" styleClass="button" outcome="backups" rendered="#{userBean.user.userRole.roleId eq 1}"/>
+		<h:link value="Stats" styleClass="button" outcome="statsSelect" />
+
+		<h:link value="New" styleClass="button" outcome="inqueryNew"
+			rendered="#{(userBean.user.userRole.roleId eq 1) or (userBean.user.userRole.roleId eq 2)}" />
+
+		<h:link value="Edit" styleClass="button" outcome="inqueryEdit"
+			rendered="#{(userBean.user.userRole.roleId eq 1) or (userBean.user.userRole.roleId eq 2)}" />
+		<p />
+		<h:link value="Backup" styleClass="button" outcome="backups"
+			rendered="#{userBean.user.userRole.roleId eq 1}" />
 		<p />
 		<p />
 		<h1>#{msgs.enterPromoteBean}</h1>
-		
-	<ui:fragment  rendered="#{(userBean.user.userRole.roleId eq 1)}">
-		<div>
-			<h:outputText value="User to promote:"></h:outputText>
-			<br />
-			<h:inputText id="promote" value="#{promoteBean.user.userName}" label="Promote" required="true"
-				requiredMessage="Please enter a user name."></h:inputText>
-			<h:message for="promote" errorClass="errorMessage" />
-			<h:commandButton value="Promote" action="#{promoteBean.promoteUser(promoteBean.user)}"></h:commandButton>
-		</div>
-	</ui:fragment>
+
+		<ui:fragment rendered="#{(userBean.user.userRole.roleId eq 1)}">
+			<div>
+				<h:outputText value="User to promote:"></h:outputText>
+				<br />
+				<h:inputText id="promote" value="#{promoteBean.user.userName}"
+					label="Promote" required="true"
+					requiredMessage="Please enter a user name."></h:inputText>
+				<h:message for="promote" errorClass="errorMessage" />
+				<h:commandButton value="Promote"
+					action="#{promoteBean.promoteUser(promoteBean.user)}"></h:commandButton>
+			</div>
+		</ui:fragment>
 	</ui:define>
 </ui:composition>
 </html>
