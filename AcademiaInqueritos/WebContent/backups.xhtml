@@ -16,29 +16,29 @@
 		</h:head>
 		
 		<h:form>
-			<h1>#{msgs.enterInqueriesBean}</h1>
+			<h1>#{msgs.enterBackupBean}</h1>
 			
 			<h:panelGrid columns="2">
 			
 			<h:outputLabel value="Backup date:"></h:outputLabel>
 			#{msgs.backupDate}   
-			<h:inputText id="backup" value="#{backupBean.backup}" label="Info"
-						required="true" requiredMessage="Please enter a date [hh:mm; dd-mm-yyyy].">
-						<f:convertDateTime pattern="hh:mm; dd-mm-yyyy" />
+			<h:inputText id="backup" value="#{backupBean.backupDate}" label="Info"
+						required="true" requiredMessage="Please enter a date [DD/MM/YYYY].">
+						<f:convertDateTime pattern="d/M/yyyy" />
 					</h:inputText>
 					<h:message for="backup" errorClass="errorMessage" />
-			<h:commandButton value="Set" action="welcome"/>
+			<h:commandButton value="Set" action="#{backupBean.scheduleBackup(backupBean.backupDate)}"/>
 			<p/>
 			
+			
 			<h:outputLabel value="Recurrent backup date: "></h:outputLabel>
+			<div>
 			#{msgs.backupRecurrentDate}   
-           <h:inputText id="backupRec" value="#{backupBean.backup}" label="Info"
-						required="true" requiredMessage="Please enter a date [hh:mm; dd-mm-yyyy].">
-						<f:convertDateTime pattern="hh:mm; dd-mm-yyyy" />
-					</h:inputText>
-					<h:message for="backupRec" errorClass="errorMessage" />
-			<h:commandButton value="Set" action="welcome"/>
-			<p/>
+           <h:inputText id="backupRec" value="#{backupBean.frequency}" label="Info"
+						required="true" requiredMessage="Please enter a number of months."></h:inputText>
+						<h:message for="backupRec" errorClass="errorMessage" />
+			<h:commandButton value="Set" action="#{backupBean.recurrentTimer(backupBean.frequency)}"/>
+			<p/></div>
 					
 			</h:panelGrid>
 			<br />

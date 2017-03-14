@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -66,5 +67,12 @@ public class UserRoles implements Serializable {
 		return true;
 	}
 	
-   
+	public static UserRoles parseUserRoles(Object[] object, EntityManager em) {
+		UserRoles userRole = new UserRoles();
+		
+		userRole.setRole((String) object[0]);
+		userRole.setRoleId((Integer) object[1]);
+		
+		return userRole;
+	}
 }

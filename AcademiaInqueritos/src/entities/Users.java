@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -89,4 +90,15 @@ public class Users implements Serializable {
 		return true;
 	}
    
+	public static Users parseUser(Object[] object, EntityManager em) {
+		Users user = new Users();
+		
+		user.setUserName((String)object[0]);
+		user.setPassword((String)object[1]);
+		user.setSalt((String)object[2]);
+		user.setUserRole(em.find(UserRoles.class, (Integer)object[3]));
+		
+		return user;
+		
+	}
 }

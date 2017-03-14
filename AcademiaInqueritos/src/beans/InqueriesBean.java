@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -17,6 +18,7 @@ import javax.transaction.UserTransaction;
 import entities.Answers;
 import entities.Inqueries;
 import entities.Questions;
+import entities.UserAnswers;
 
 /**
  * Session Bean implementation class InqueriesBean
@@ -37,6 +39,7 @@ public class InqueriesBean implements Serializable {
 	private ArrayList<Answers> answers = new ArrayList<Answers>();
 	private ArrayList<Questions> questionArray = new ArrayList<Questions>();
 	private ArrayList<Inqueries> inqueries = new ArrayList<Inqueries>();
+	private ArrayList<UserAnswers> userAnswers = new ArrayList<UserAnswers>();
 
 	/**
 	 * Default constructor.
@@ -168,13 +171,11 @@ public class InqueriesBean implements Serializable {
 	 */
 	public String showInqueries(){
 		
-		Date today = new Date((DateTimeFormatter.ofPattern("yyyy/MM/dd").format(LocalDate.now())));
 
-		List<Object[]> inqs = em.createNamedQuery("SELECT * FROM Inqueries WHEN STARTDATE < #"+today+"# AND ENDDATE > #"+today+"#").getResultList();
-		
-		for(Object[] object: inqs) {
-			inqueries.add(Inqueries.parseInquery(object, em));
-		}
+		String today = (DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now()));
+
+		inqueries = (ArrayList<Inqueries>) em.createNativeQuery("SELECT * FROM Inqueries WHERE '" + today + "' BETWEEN STARTDATE AND ENDDATE", Inqueries.class).getResultList();
+
 		
 		if(this.inqueries==null){
 			 return "notInqueriesToday";
@@ -185,6 +186,7 @@ public class InqueriesBean implements Serializable {
 	}
 
 	public Inqueries getInquery() {
+		
 		return this.inquery;
 	}
 
@@ -193,6 +195,7 @@ public class InqueriesBean implements Serializable {
 	}
 	
 	public ArrayList<Inqueries> getInqueries() {
+		showInqueries();
 		return inqueries;
 	}
 
@@ -263,5 +266,28 @@ public class InqueriesBean implements Serializable {
 
 	public void setAnswers(ArrayList<Answers> answers) {
 		this.answers = answers;
+	}
+	
+	/**
+	 * Adds a user's answers to the database
+	 * 
+	 * @param answers
+	 * @return
+	 * @throws Exception
+	 */
+	public String registerUserAnswers(ArrayList<UserAnswers> userAnswer) throws Exception {
+		utx.begin();
+		for(UserAnswers userAnswers: userAnswer) {
+			em.persist(userAnswers);
+		}
+		utx.commit();
+		return "success";
+	}
+	public ArrayList<UserAnswers> getUserAnswers() {
+		return userAnswers;
+	}
+
+	public void setUserAnswers(ArrayList<UserAnswers> userAnswers) {
+		this.userAnswers = userAnswers;
 	}
 }

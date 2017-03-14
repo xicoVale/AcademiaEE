@@ -122,25 +122,22 @@ public class Inqueries implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 	/**
 	 * Creates an Inquery from an object array
 	 * 
 	 * @param object
 	 * @return
 	 */
-	public static Inqueries parseInquery(Object[] object, EntityManager em) {
-		Inqueries inquery = new Inqueries();
-		
-		inquery.setInqueryId((Integer) object[0]);
-		inquery.setEndDate((Date) object[1]);
-		inquery.setStartDate((Date) object[2]);
-		inquery.setTitle((String) object[3]);
-		Users creator = em.find(Users.class, (String) object[4]);
-		inquery.setUser(creator);
-		
-		return inquery;
-	}
-	
-   
+   public static Inqueries parseInquery(Object[] object, EntityManager em){
+	   Inqueries inquery = new Inqueries();
+	   
+	   inquery.setInqueryId((Integer)object[0]);
+	   inquery.setEndDate((Date) object[1]);
+	   inquery.setStartDate((Date) object[2]);
+	   inquery.setTitle((String) object[3]);
+	   inquery.setUser(em.find(Users.class, (String)object[4]));
+	   
+	   return inquery;
+   }
 }

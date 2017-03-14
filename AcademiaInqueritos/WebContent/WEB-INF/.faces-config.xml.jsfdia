@@ -25,7 +25,16 @@
  <PROCESS-ITEM NAME="rules:#welcome.xhtml" PATH="/welcome.xhtml"
   SHAPE="256,33,0,0" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#welcome.xhtml:0" NAME="item"
-   PATH="/welcome.xhtml" model-entity="JSFProcessItem"/>
+   PATH="/welcome.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{promoteBean.promoteUser(promoteBean.user)}:#welcome.xhtml"
+    NAME="output" PATH="/welcome.xhtml" TARGET="rules:#welcome.xhtml"
+    TITLE="#{promoteBean.promoteUser(promoteBean.user)}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="userNotExists:#{promoteBean.promoteUser(promoteBean.user)}:#login.xhtml"
+    NAME="output1" PATH="/login.xhtml" TARGET="rules:#login.xhtml"
+    TITLE="#{promoteBean.promoteUser(promoteBean.user)}:userNotExists" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#inqueryNew.html" PATH="/inqueryNew.html"
   SHAPE="32,225,0,0" model-entity="JSFProcessGroup">
@@ -53,7 +62,7 @@
   </PROCESS-ITEM>
  </PROCESS-ITEM>
  <PROCESS-ITEM NAME="rules:#inqueryNewNext.html"
-  PATH="/inqueryNewNext.html" SHAPE="304,353,0,0" model-entity="JSFProcessGroup">
+  PATH="/inqueryNewNext.html" SHAPE="624,360,50,57" model-entity="JSFProcessGroup">
   <PROCESS-ITEM ID="rules:#inqueryNewNext.html:0" NAME="item"
    PATH="/inqueryNewNext.html" model-entity="JSFProcessItem">
    <PROCESS-ITEM-OUTPUT
@@ -67,4 +76,45 @@
     TITLE="#{inqueryBean.registerQuestion(inqueryBean.inquery)}:success" model-entity="JSFProcessItemOutput"/>
   </PROCESS-ITEM>
  </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#inqueryEdit.xhtml" PATH="/inqueryEdit.xhtml"
+  SHAPE="32,689,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#inqueryEdit.xhtml:0" NAME="item"
+   PATH="/inqueryEdit.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{inqueriesBean.editInquery(inqueriesBean.inquery)}:#welcome.xhtml"
+    NAME="output" PATH="/welcome.xhtml" TARGET="rules:#welcome.xhtml"
+    TITLE="#{inqueriesBean.editInquery(inqueriesBean.inquery)}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#backups.xhtml" PATH="/backups.xhtml"
+  SHAPE="32,1025,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#backups.xhtml:0" NAME="item"
+   PATH="/backups.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{backupBean.scheduleBackup(backupBean.backupDate)}:#welcome.xhtml"
+    NAME="output" PATH="/welcome.xhtml" TARGET="rules:#welcome.xhtml"
+    TITLE="#{backupBean.scheduleBackup(backupBean.backupDate)}:success" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="wrongDateFormat:#{backupBean.scheduleBackup(backupBean.backupDate)}:#backups.xhtml"
+    NAME="output1" PATH="/backups.xhtml" TARGET="rules:#backups.xhtml"
+    TITLE="#{backupBean.scheduleBackup(backupBean.backupDate)}:wrongDateFormat" model-entity="JSFProcessItemOutput"/>
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{backupBean.recurrentTimer(backupBean.frequency)}:#welcome.xhtml"
+    NAME="output2" PATH="/welcome.xhtml" TARGET="rules:#welcome.xhtml"
+    TITLE="#{backupBean.recurrentTimer(backupBean.frequency)}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#statsSelect.xhtml" PATH="/statsSelect.xhtml"
+  SHAPE="32,1425,0,0" model-entity="JSFProcessGroup">
+  <PROCESS-ITEM ID="rules:#statsSelect.xhtml:0" NAME="item"
+   PATH="/statsSelect.xhtml" model-entity="JSFProcessItem">
+   <PROCESS-ITEM-OUTPUT
+    ID="success:#{statsBean.showStats(inqueriesBean.inquery)}:#statsResult.xhtml"
+    NAME="output" PATH="/statsResult.xhtml"
+    TARGET="rules:#statsResult.xhtml"
+    TITLE="#{statsBean.showStats(inqueriesBean.inquery)}:success" model-entity="JSFProcessItemOutput"/>
+  </PROCESS-ITEM>
+ </PROCESS-ITEM>
+ <PROCESS-ITEM NAME="rules:#statsResult.xhtml" PATH="/statsResult.xhtml"
+  SHAPE="240,1665,0,0" model-entity="JSFProcessGroup"/>
 </PROCESS>

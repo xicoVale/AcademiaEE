@@ -97,10 +97,8 @@ public class Answers implements Serializable {
 	   
 	   answer.setAnswerId((Integer) object[0]);
 	   answer.setAnswerText((String) object[1]);
-	   Questions question = em.find(Questions.class, (Integer) object[2]);
-	   answer.setQuestions(question);
+	   answer.setQuestions(em.find(Questions.class, (Integer) object[2]));
 	   
 	   return answer;
-	   
    }
 }

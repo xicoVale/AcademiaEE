@@ -5,10 +5,13 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:t="http://java.sun.com/jsf/core">
+	xmlns:t="http://java.sun.com/jsf/core">
 
 <ui:composition template="/WEB-INF/templates/BasicTemplate.xhtml">
 	<ui:define name="content">
+		<h:head>
+			<h:outputStylesheet library="css" name="styles.css" />
+		</h:head>
 		<h:outputLabel value="Statistical analysis"></h:outputLabel>
 		<p />
 	   Please select an inquery:
@@ -19,16 +22,22 @@
 				<h:outputText id="creator" value="Creator"></h:outputText>
 
 				<h:panelGroup style="display:block; text-align:left">
-					<h:selectOneRadio id="inquery" value="#{inqueriesBean.inqueries}" label="Inquery" layout="pageDirection">
-						<f:selectItem value="#{inqueriesBean.userAnswer}"/>
+
+					<h:outputText id="inqueries"
+						value="#{inqueriesBean.showInqueries()}"></h:outputText>
+					<h:selectOneRadio id="inquery" value="#{inqueriesBean.inqueries}"
+						label="Inquery" layout="pageDirection">
+						<f:selectItems value="#{inqueriesBean.inqueries}" var="i"
+							itemValue="#{i.inqueryId}" itemLabel="#{i.title}" />
 					</h:selectOneRadio>
 				</h:panelGroup>
 			</h:panelGrid>
 			<p />
-			<h:commandButton value="Back" action="welcome"></h:commandButton>
-			<h:commandButton value="Next" action="statsResult"></h:commandButton>
-
+			<h:commandButton value="Next"
+				action="#{statsBean.showStats(inqueriesBean.inquery)}"></h:commandButton>
+			<p />
 		</h:form>
+		<h:link value="Back" styleClass="button" outcome="welcome" />
 	</ui:define>
 </ui:composition>
 </html>

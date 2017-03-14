@@ -97,10 +97,8 @@ public class Questions implements Serializable {
 		
 		question.setQuestionId((Integer) object[0]);
 		question.setQuestionText((String) object[1]);
-		Inqueries inquery = em.find(Inqueries.class, (Integer) object[3]);
-		question.setInquery(inquery);
+		question.setInquery(em.find(Inqueries.class, (Integer)object[2]));
 		
 		return question;
 	}
-	
 }

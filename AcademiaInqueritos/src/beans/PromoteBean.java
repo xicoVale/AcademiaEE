@@ -2,9 +2,10 @@ package beans;
 
 import java.io.Serializable;
 
-import javax.annotation.ManagedBean;
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.bean.ManagedBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.HeuristicMixedException;
@@ -14,6 +15,7 @@ import javax.transaction.RollbackException;
 import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
+import entities.UserRoles;
 import entities.Users;
 
 @ManagedBean
@@ -22,7 +24,7 @@ public class PromoteBean implements Serializable{
 
 	private static final long serialVersionUID = -6371307947553281102L;
 	
-	private Users user = new Users();
+	private Users user;
 	
 	@PersistenceContext
 	EntityManager em;
@@ -31,6 +33,12 @@ public class PromoteBean implements Serializable{
 	UserTransaction utx;
 
 	public PromoteBean() {
+		
+	}
+	
+	@PostConstruct
+	public void init(){
+		user = new Users();
 	}
 
 	public Users getUser() {
@@ -55,17 +63,19 @@ public class PromoteBean implements Serializable{
 	 * @throws HeuristicRollbackException
 	 */
 	public String promoteUser(Users user) throws NotSupportedException, SystemException, SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException {
-		user = em.find(Users.class, user.getUserName());
+		this.user = em.find(Users.class, user.getUserName());
 		
-		if(user == null) {
+		if(this.user == null) {
+			this.user= new Users();
 			return "userNotExists";
 		}
 		
 		else {
 			utx.begin();
-			em.createNamedQuery("UPDATE Users "
-					+ "SET USERROLE_ROLEID = 2 "
-					+ "WHERE USERNAME = " + user.getUserName());
+			UserRoles role= em.find(UserRoles.class,2);
+			this.user.setUserRole(role);
+			em.merge(this.user);
+//			em.createNativeQuery("UPDATE Users SET USERROLE_ROLEID = 2 WHERE USERNAME = '" + this.user.getUserName()+"'");
 			utx.commit();
 			
 			return "success";

@@ -35,17 +35,17 @@
 							<h:inputText id="answer2"
 								value="#{inqueriesBean.answers[1].answerText}" label="Answer2"
 								required="true" requiredMessage="Please enter an answer."></h:inputText>
-							<h:message for="Answer2" styleClass="errorMessage" />
+							<h:message for="answer2" styleClass="errorMessage" />
 
 							<h:inputText id="answer3"
 								value="#{inqueriesBean.answers[2].answerText}" label="Answer3"
 								required="true" requiredMessage="Please enter an answer."></h:inputText>
-							<h:message for="Answer3" styleClass="errorMessage" />
+							<h:message for="answer3" styleClass="errorMessage" />
 
 							<h:inputText id="answer4"
 								value="#{inqueriesBean.answers[3].answerText}" label="Answer4"
 								required="true" requiredMessage="Please enter an answer."></h:inputText>
-							<h:message for="Answer4" styleClass="errorMessage" />
+							<h:message for="answer4" styleClass="errorMessage" />
 				</h:panelGrid>
 					<h:commandButton value="Next" action="#{inqueriesBean.registerQuestionNext(inqueriesBean.inquery)}"></h:commandButton>
 					<h:commandButton value="Finish" action="#{inqueriesBean.registerQuestion(inqueriesBean.inquery)}"></h:commandButton>
